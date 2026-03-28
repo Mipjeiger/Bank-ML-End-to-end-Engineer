@@ -16,7 +16,7 @@
     - Predictive maintenance if exists in Production
     - Root causes analysis
 
-## Metrics output on Machine Learning models
+## 🧠 Metrics output on Machine Learning models
 Training model Decision Tree...
 Classification report for Decision Tree:
               precision    recall  f1-score   support
