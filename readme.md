@@ -16,7 +16,11 @@
     - Predictive maintenance if exists in Production
     - Root causes analysis
 
-## 🧠 Metrics output on Machine Learning models
+## 🤖 Conftusion matrix on metrics machine learning models result -> (Fraud detection, Market Risk, Operational Risk)
+    - Decision Tree Classifier - Confusion Matrix
+    ![alt text](Database/images/confusion_matrix_Decision_Tree.png)
+
+## 🧠 Metrics output on Machine Learning models -> Churn prediction
 Training model Decision Tree...
 Classification report for Decision Tree:
               precision    recall  f1-score   support

@@ -1,0 +1,112 @@
+{
+    "Logistic Regression": {
+        "Fraud": {
+            "Accuracy": 0.942,
+            "Precision": 0.2916666666666667,
+            "Recall": 0.5303030303030303,
+            "F1 Score": 0.3763440860215054,
+            "ROC AUC": 0.9362445551690639,
+            "Best Threshold": 0.85
+        },
+        "Marketing": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        },
+        "Operational": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        }
+    },
+    "Decision Tree": {
+        "Fraud": {
+            "Accuracy": 0.94,
+            "Precision": 0.30434782608695654,
+            "Recall": 0.6363636363636364,
+            "F1 Score": 0.4117647058823529,
+            "ROC AUC": 0.7921915640374791,
+            "Best Threshold": 0.1
+        },
+        "Marketing": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        },
+        "Operational": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        }
+    },
+    "Random Forest": {
+        "Fraud": {
+            "Accuracy": 0.9385,
+            "Precision": 0.3389830508474576,
+            "Recall": 0.9090909090909091,
+            "F1 Score": 0.49382716049382713,
+            "ROC AUC": 0.9614161261007177,
+            "Best Threshold": 0.35
+        },
+        "Marketing": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        },
+        "Operational": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        }
+    },
+    "XGBoost": {
+        "Fraud": {
+            "Accuracy": 0.936,
+            "Precision": 0.3176470588235294,
+            "Recall": 0.8181818181818182,
+            "F1 Score": 0.4576271186440678,
+            "ROC AUC": 0.9617138290871486,
+            "Best Threshold": 0.1
+        },
+        "Marketing": {
+            "Accuracy": 0.9995,
+            "Precision": 0.9995006289308176,
+            "Recall": 0.9995,
+            "F1 Score": 0.9994968239983218
+        },
+        "Operational": {
+            "Accuracy": 1.0,
+            "Precision": 1.0,
+            "Recall": 1.0,
+            "F1 Score": 1.0
+        }
+    },
+    "KNN": {
+        "Fraud": {
+            "Accuracy": 0.927,
+            "Precision": 0.2619047619047619,
+            "Recall": 0.6666666666666666,
+            "F1 Score": 0.37606837606837606,
+            "ROC AUC": 0.8481401397637179,
+            "Best Threshold": 0.45
+        },
+        "Marketing": {
+            "Accuracy": 0.9335,
+            "Precision": 0.9341699247792407,
+            "Recall": 0.9335,
+            "F1 Score": 0.9332896671957428
+        },
+        "Operational": {
+            "Accuracy": 0.9885,
+            "Precision": 0.9885608997524522,
+            "Recall": 0.9885,
+            "F1 Score": 0.9885057844823428
+        }
+    }
+}

@@ -1,0 +1,102 @@
+{
+    "Logistic Regression": {
+        "Fraud": {
+            "filename": "Logistic_Regression_Fraud.pkl",
+            "filepath": "fraud_detection_results/models/Logistic_Regression_Fraud.pkl",
+            "task": "Fraud",
+            "model_type": "LogisticRegression"
+        },
+        "Marketing": {
+            "filename": "Logistic_Regression_Marketing.pkl",
+            "filepath": "fraud_detection_results/models/Logistic_Regression_Marketing.pkl",
+            "task": "Marketing",
+            "model_type": "LogisticRegression"
+        },
+        "Operational": {
+            "filename": "Logistic_Regression_Operational.pkl",
+            "filepath": "fraud_detection_results/models/Logistic_Regression_Operational.pkl",
+            "task": "Operational",
+            "model_type": "LogisticRegression"
+        }
+    },
+    "Decision Tree": {
+        "Fraud": {
+            "filename": "Decision_Tree_Fraud.pkl",
+            "filepath": "fraud_detection_results/models/Decision_Tree_Fraud.pkl",
+            "task": "Fraud",
+            "model_type": "DecisionTreeClassifier"
+        },
+        "Marketing": {
+            "filename": "Decision_Tree_Marketing.pkl",
+            "filepath": "fraud_detection_results/models/Decision_Tree_Marketing.pkl",
+            "task": "Marketing",
+            "model_type": "DecisionTreeClassifier"
+        },
+        "Operational": {
+            "filename": "Decision_Tree_Operational.pkl",
+            "filepath": "fraud_detection_results/models/Decision_Tree_Operational.pkl",
+            "task": "Operational",
+            "model_type": "DecisionTreeClassifier"
+        }
+    },
+    "Random Forest": {
+        "Fraud": {
+            "filename": "Random_Forest_Fraud.pkl",
+            "filepath": "fraud_detection_results/models/Random_Forest_Fraud.pkl",
+            "task": "Fraud",
+            "model_type": "RandomForestClassifier"
+        },
+        "Marketing": {
+            "filename": "Random_Forest_Marketing.pkl",
+            "filepath": "fraud_detection_results/models/Random_Forest_Marketing.pkl",
+            "task": "Marketing",
+            "model_type": "RandomForestClassifier"
+        },
+        "Operational": {
+            "filename": "Random_Forest_Operational.pkl",
+            "filepath": "fraud_detection_results/models/Random_Forest_Operational.pkl",
+            "task": "Operational",
+            "model_type": "RandomForestClassifier"
+        }
+    },
+    "XGBoost": {
+        "Fraud": {
+            "filename": "XGBoost_Fraud.pkl",
+            "filepath": "fraud_detection_results/models/XGBoost_Fraud.pkl",
+            "task": "Fraud",
+            "model_type": "XGBClassifier"
+        },
+        "Marketing": {
+            "filename": "XGBoost_Marketing.pkl",
+            "filepath": "fraud_detection_results/models/XGBoost_Marketing.pkl",
+            "task": "Marketing",
+            "model_type": "XGBClassifier"
+        },
+        "Operational": {
+            "filename": "XGBoost_Operational.pkl",
+            "filepath": "fraud_detection_results/models/XGBoost_Operational.pkl",
+            "task": "Operational",
+            "model_type": "XGBClassifier"
+        }
+    },
+    "KNN": {
+        "Fraud": {
+            "filename": "KNN_Fraud.pkl",
+            "filepath": "fraud_detection_results/models/KNN_Fraud.pkl",
+            "task": "Fraud",
+            "model_type": "KNeighborsClassifier"
+        },
+        "Marketing": {
+            "filename": "KNN_Marketing.pkl",
+            "filepath": "fraud_detection_results/models/KNN_Marketing.pkl",
+            "task": "Marketing",
+            "model_type": "KNeighborsClassifier"
+        },
+        "Operational": {
+            "filename": "KNN_Operational.pkl",
+            "filepath": "fraud_detection_results/models/KNN_Operational.pkl",
+            "task": "Operational",
+            "model_type": "KNeighborsClassifier"
+        }
+    }
+}
