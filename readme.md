@@ -17,8 +17,14 @@
     - Root causes analysis
 
 ## 🤖 Conftusion matrix on metrics machine learning models result -> (Fraud detection, Market Risk, Operational Risk)
-    - Decision Tree Classifier - Confusion Matrix
+- Decision Tree Classifier - Confusion Matrix
     ![alt text](Database/images/confusion_matrix_Decision_Tree.png)
+- KNeighbor Classifier - Confusion Matrix
+    ![alt text](Database/images/confusion_matrix_KNN.png)
+- Random Forest Classifier - Confusion Matrix
+    ![alt text](Database/images/confusion_matrix_Random_Forest.png)
+- XGBoost Classifier - Confusion Matrix
+    ![alt text](Database/images/confusion_matrix_XGBoost.png)
 
 ## 🧠 Metrics output on Machine Learning models -> Churn prediction
 Training model Decision Tree...
