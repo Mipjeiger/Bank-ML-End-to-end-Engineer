@@ -26,6 +26,12 @@
 - XGBoost Classifier - Confusion Matrix
     ![alt text](Database/images/confusion_matrix_XGBoost.png)
 
+## 🏦 API Production -> Models ingested to embed in Production with API Integration
+- Machine learning models Information -> Churn and Fraud (Involving Market analysis, Operational risk, Fraud detection, Credit risk analysis)
+    ![alt text](EEDE4B98-12BD-47EE-B2C8-5DB30E675E46.png)
+
+
+
 ## 🧠 Metrics output on Machine Learning models -> Churn prediction
 Training model Decision Tree...
 Classification report for Decision Tree:

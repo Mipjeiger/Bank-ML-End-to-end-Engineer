@@ -1,6 +1,5 @@
 import joblib
 import os
-import gradio as gr
 import glob
 import logging
 import json
@@ -266,6 +265,7 @@ class ModelManager:
 # LIFESPAN EVENT HANDLER
 # ────────────────────────────────────────────────────────────────────────────
 
+# Class API calls to loads startup and shutdown events
 model_manager = ModelManager()
 
 @asynccontextmanager
