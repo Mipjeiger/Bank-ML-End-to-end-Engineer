@@ -11,7 +11,7 @@ from datetime import datetime
 
 import pandas as pd
 import numpy as np
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
@@ -49,6 +49,9 @@ REGISTRY_FILE_FRAUD = BASE_DIR / "models" / "fraud_detection_results" / "model_r
 
 class PredictionRequest(BaseModel):
     """Base prediction request schema"""
+    RowNumber: int = Field(..., description="Row number in the dataset")
+    CustomerId: int = Field(..., description="Unique customer ID")
+    Surname: int = Field(..., description="Customer surname (not used in prediction)")
     CreditScore: int = Field(..., description="Credit score of the customer")
     Geography: str = Field(..., description="Geographical location of the customer")
     Gender: str = Field(..., description="Gender (Male, Female)")
@@ -56,22 +59,74 @@ class PredictionRequest(BaseModel):
     Tenure: int = Field(..., description="Years as customer (0-10)")
     Balance: float = Field(..., description="Account balance")
     NumOfProducts: int = Field(..., description="Number of products (1-4)")
-    HasCrCar: bool = Field(..., description="Has credit card")
+    HasCrCard: bool = Field(..., description="Has credit card")
     IsActiveMember: int = Field(..., description="Is active member (0 or 1)")
     EstimatedSalary: float = Field(..., description="Estimated salary")
+    Complain: int = Field(..., description="Customer complain (0 or 1)")
+    SatisfactionScore: int = Field(..., description="Customer satisfaction score (1-5)")
+    CardType: str = Field(..., description="Type of card (Blue, Silver, Gold, Platinum)")
+    PointEarned: int = Field(..., description="Loyalty points earned")
 
-    @validator('CreditScore')
-    def validate_credit_score(cls, v):
+    @field_validator('CreditScore')
+    @classmethod
+    def validate_credit_score(cls, v: int) -> int:
         if not 300 <= v <= 850:
             raise ValueError('CreditScore must be between 300 and 850')
         return v
-    
-    @validator('Age')
-    def validate_age(cls, v):
+
+    @field_validator('Age')
+    @classmethod
+    def validate_age(cls, v: int) -> int:
         if not 18 <= v <= 100:
             raise ValueError('Age must be between 18 and 100')
         return v
     
+    @field_validator('IsActiveMember')
+    @classmethod
+    def validate_is_active_member(cls, v: int) -> int:
+        if v not in [0, 1]:
+            raise ValueError('IsActiveMember must be either 0 or 1')
+        return v
+
+    @field_validator('Complain')
+    @classmethod
+    def validate_complain(cls, v: int) -> int:
+        if v not in (0, 1):
+            raise ValueError('Complain must be 0 or 1')
+        return v
+
+    @field_validator('SatisfactionScore')
+    @classmethod
+    def validate_satisfaction_score(cls, v: int) -> int:
+        if not 1 <= v <= 5:
+            raise ValueError('SatisfactionScore must be between 1 and 5')
+        return v
+
+class FraudPredictionRequest(BaseModel):
+    """Base fraud prediction request schema"""
+    CreditScore: int = Field(..., description="Credit score of the customer")
+    Geography: str = Field(..., description="Geographical location of the customer")
+    Gender: str = Field(..., description="Gender (Male, Female)")
+    Age: int = Field(..., description="Age (18-100)")
+    Tenure: int = Field(..., description="Years as customer (0-10)")
+    Balance: float = Field(..., description="Account balance")
+    NumOfProducts: int = Field(..., description="Number of products (1-4)")
+    HasCrCard: bool = Field(..., description="Has credit card")
+    IsActiveMember: int = Field(..., description="Is active member (0 or 1)")
+    EstimatedSalary: float = Field(..., description="Estimated salary")
+    Exited: bool = Field(..., description="Customer exited (0 or 1)")
+    Complain: int = Field(..., description="Customer complain (0 or 1)")
+    SatisfactionScore: int = Field(..., description="Customer satisfaction score (1-5)")
+    CardType: str = Field(..., description="Type of card (Blue, Silver, Gold, Platinum)")
+    PointEarned: int = Field(..., description="Loyalty points earned")
+    RiskScore: int = Field(..., description="Operational risk score (1-100)")
+    BalancePerProduct: float = Field(..., description="Balance per product")
+    AgeRisk: int = Field(..., description="Age risk score (1-100)")
+    HighValueCustomer: int = Field(..., description="High value customer (0 or 1)")
+    LowCreditRisk: int = Field(..., description="Low credit risk (0 or 1)")
+    ComplainFlag: int = Field(..., description="Complain flag (0 or 1)")
+    LowSatisfaction: int = Field(..., description="Low satisfaction flag (0 or 1)")
+
 class PredictionResponse(BaseModel):
     """Standard prediction response schema"""
     prediction: int
@@ -84,7 +139,8 @@ class HealthResponse(BaseModel):
     """Health check response schema"""
     status: str
     timestamp: str
-    models_loaded: int
+    churn_models_loaded: int
+    fraud_models_loaded: int
     tasks_available: list[str]
     version: str = "1.0"
 
@@ -207,44 +263,55 @@ class ModelManager:
             logger.warning("Some models failed to load")
             return False
         
-    def predict_churn(self, data: pd.DataFrame) -> Tuple[int, str]:
-        """Make churn prediction"""
+    def predict_churn(self, data: np.ndarray) -> Tuple[int, float, str]:
+        """Make churn prediction with probability"""
         if self.churn_model is None:
             raise ValueError("Churn model not loaded")
         
         try:
             prediction = self.churn_model.predict(data)
-            return int(prediction[0]), "Customer churn"
+            probability = self.churn_model.predict_proba(data)
+            churn_probability = float(probability[0][1])
+            return int(prediction[0]), churn_probability, "Customer churn"
         except Exception as e:
             logger.error(f"Churn prediction error: {e}")
             raise
 
-    def get_best_fraud_model(self, task: str):
-        """Get best fraud model for a given task"""
-        if task in self.fraud_registry and 'Model' in self.fraud_registry[task]:
-            model_name = self.fraud_registry[task]['Model']
-            if model_name in self.fraud_models and task in self.fraud_models[model_name]:
-                return self.fraud_models[model_name][task], model_name
+    def get_best_fraud_model(self, task: str, model_name: str = None):
+        """Get fraud model based on user choice or registry"""
+        # 1. if user specifies model -> use it
+        if model_name:
+            if model_name in self.fraud_models:
+                if task in self.fraud_models[model_name]:
+                    return self.fraud_models[model_name][task], model_name
+                else:
+                    raise ValueError(f"Model '{model_name}' does not support task '{task}")
+            else:
+                raise ValueError(f"Model '{model_name}' not found in loaded fraud models")
             
-        # Fallback to first available model for the task
+        # 2. Use registry (auto best models)
+        if task in self.fraud_registry and 'Model' in self.fraud_registry[task]:
+            best_model_name = self.fraud_registry[task]['Model']
+            if best_model_name in self.fraud_models and task in self.fraud_models[best_model_name]:
+                return self.fraud_models[best_model_name][task], best_model_name
+
+        # 3. Fallback to first available model for the task
         for name, tasks in self.fraud_models.items():
             if task in  tasks:
                 return tasks[task], name
             
         return None, None
     
-    def predict_fraud(self, task: str, data: pd.DataFrame) -> Tuple[int, str]:
+    def predict_fraud(self, task: str, data: np.ndarray, model_name: str = None):
         """Make fraud prediction"""
-        model, model_name = self.get_best_fraud_model(task=task)
+        model, model_name = self.get_best_fraud_model(task, model_name)
         if model is None:
             raise ValueError(f"No model available for task: {task}")
         
-        try:
-            prediction = model.predict(data)
-            return int(prediction[0]), model_name
-        except Exception as e:
-            logger.error(f"Fraud prediction error for task {task}: {e}")
-            raise
+        prediction = model.predict(data)
+        probability = model.predict_proba(data)
+
+        return int(prediction[0]), float(probability[0][1]), model_name
 
     def get_model_info(self) -> Dict:
         """Get information about all loaded models"""
@@ -261,12 +328,12 @@ class ModelManager:
             }
         }
     
+# Class API calls to loads startup and shutdown events
+model_manager = ModelManager()
+
 # ────────────────────────────────────────────────────────────────────────────
 # LIFESPAN EVENT HANDLER
 # ────────────────────────────────────────────────────────────────────────────
-
-# Class API calls to loads startup and shutdown events
-model_manager = ModelManager()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -329,33 +396,163 @@ async def get_version():
             }
 
 # ────────────────────────────────────────────────────────────────────────────
-# ENDPOINTS - CHURN PREDICTION
+# ENDPOINTS - POST PREDICTION
 # ────────────────────────────────────────────────────────────────────────────
 
+# Encoding maps
+"""Create encoding features to prevent data leakage and ensure consistency fits."""
+GEOGRAPHY_MAP = {"France": 0, "Germany": 1, "Spain": 2}
+GENDER_MAP = {"Male": 1, "Female": 0}
+CARD_TYPE_MAP = {"DIAMOND": 0, "GOLD": 1, "PLATINUM": 2, "SILVER": 3}
+
+# Churn Prediction Endpoint
 @app.post("/predict/churn", response_model=PredictionResponse, tags=["Predictions"])
 async def predict_churn(request: PredictionRequest):
     """Predict customer churn"""
     try:
         if not model_manager.churn_loaded:
             raise HTTPException(status_code=503, detail='Churn model not available')
-        
-        # Prediction toward to dataframe
-        df = pd.DataFrame([request.dict()])
-        prediction, model_name = model_manager.predict_churn(df)
 
-        logger.info(f"Churn prediction: {prediction}")
+
+        # Validate categorical variables
+        if request.Geography not in GEOGRAPHY_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Geography value: {request.Geography}. Allowed values: {list(GEOGRAPHY_MAP.keys())}")
+        
+        if request.Gender not in GENDER_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Gender value: {request.Gender}. Allowed values: {list(GENDER_MAP.keys())}")
+
+        if request.CardType not in CARD_TYPE_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Card Type value: {request.CardType}. Allowed values: {list(CARD_TYPE_MAP.keys())}")
+
+        # Build numpy array in the EXACT same column order as training
+        features = np.array([[
+            request.RowNumber,
+            request.CustomerId,
+            request.Surname,
+            request.CreditScore,
+            GEOGRAPHY_MAP[request.Geography],
+            GENDER_MAP[request.Gender],
+            request.Age,
+            request.Tenure,
+            request.Balance,
+            request.NumOfProducts,
+            int(request.HasCrCard),
+            int(request.IsActiveMember),
+            request.EstimatedSalary,
+            request.Complain,
+            request.SatisfactionScore,
+            CARD_TYPE_MAP[request.CardType],
+            request.PointEarned
+        ]])
+
+        prediction, probability, model_name = model_manager.predict_churn(features)
+        logger.info(f"Churn prediction: {prediction}, probability: {probability}")
 
         return PredictionResponse(
             prediction=prediction,
+            probability=probability,
             model_used=model_name,
-            model_type="fraud",
             timestamp=datetime.now().isoformat(),
-            task="Operational Risk"
+            task="Customer churn"
         )
+    except HTTPException as e:
+        raise
     except Exception as e:
         logger.error(f"Error in churn prediction endpoint: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+
+
+# Create function for preprocessing fraud input data
+def preprocess_fraud_input(request: FraudPredictionRequest) -> np.ndarray:
+        # Define feature_order
+        FEATURE_ORDER = [
+            "CreditScore", "Geography", "Gender", "Age", "Tenure",
+            "Balance", "NumOfProducts", "HasCrCard", "IsActiveMember",
+            "EstimatedSalary", "Exited", "Complain", "SatisfactionScore",
+            "CardType", "PointEarned",
+            "RiskScore", "BalancePerProduct", "AgeRisk",
+            "HighValueCustomer", "LowCreditRisk", "ComplainFlag", "LowSatisfaction"
+            ]
+        """Preprocess fraud prediction input to match model features and order"""
+        # Validate categorical variables
+        if request.Geography not in GEOGRAPHY_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Geography value: {request.Geography}. Allowed values: {list(GEOGRAPHY_MAP.keys())}")
+        
+        if request.Gender not in GENDER_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Gender value: {request.Gender}. Allowed values: {list(GENDER_MAP.keys())}")
+        
+        if request.CardType not in CARD_TYPE_MAP:
+            raise HTTPException(status_code=400, detail=f"Invalid Card Type value: {request.CardType}. Allowed values: {list(CARD_TYPE_MAP.keys())}")
+        
+        # Build features dict
+        data = {
+        "CreditScore": request.CreditScore,
+        "Geography": GEOGRAPHY_MAP[request.Geography],
+        "Gender": GENDER_MAP[request.Gender],
+        "Age": request.Age,
+        "Tenure": request.Tenure,
+        "Balance": request.Balance,
+        "NumOfProducts": request.NumOfProducts,
+        "HasCrCard": int(request.HasCrCard),
+        "IsActiveMember": int(request.IsActiveMember),
+        "EstimatedSalary": request.EstimatedSalary,
+        "Exited": int(request.Exited),
+        "Complain": request.Complain,
+        "SatisfactionScore": request.SatisfactionScore,
+        "CardType": CARD_TYPE_MAP[request.CardType],
+        "PointEarned": request.PointEarned,
+        "RiskScore": request.RiskScore,
+        "BalancePerProduct": request.BalancePerProduct,
+        "AgeRisk": request.AgeRisk,
+        "HighValueCustomer": request.HighValueCustomer,
+        "LowCreditRisk": request.LowCreditRisk,
+        "ComplainFlag": request.ComplainFlag,
+        "LowSatisfaction": request.LowSatisfaction
+        }
+
+        features = np.array([[data[col] for col in FEATURE_ORDER]])
+        return features
+
+# Fraud Prediction Endpoint
+@app.post("/predict/fraud/{task}", response_model=PredictionResponse, tags=["Predictions"])
+async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: str = None):
+    """Predict fraud for a given task"""
+    try:
+        if not model_manager.fraud_loaded:
+            raise HTTPException(status_code=503, detail='Fraud models not available')
+        
+        # Convert input data to numpy array (assuming data is a dict of features)
+        features = preprocess_fraud_input(request)
+        prediction, probability, model_name = model_manager.predict_fraud(task=task, 
+                                                                          data=features, 
+                                                                          model_name=model_name)
+        logger.info(f"Fraud prediction for task {task}: {prediction}, probability: {probability}")
+
+        return {
+            "prediction": prediction,
+            "probability": probability,
+            "model_used": model_name,
+            "timestamp": datetime.now().isoformat(),
+            "task": task
+        }
+    except Exception as e:
+        raise
+    except Exception as e:
+        logger.error(f"Error in fraud detection endpoint: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     
+# Market Risk Prediction Endpoint
+
+
+
+
+
+# Operation Risk Prediction Endpoint
+
+
+
+
+
 # ────────────────────────────────────────────────────────────────────────────
 # ROOT ENDPOINT
 # ────────────────────────────────────────────────────────────────────────────
