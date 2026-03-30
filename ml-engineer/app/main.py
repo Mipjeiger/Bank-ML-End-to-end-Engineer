@@ -277,8 +277,8 @@ class ModelManager:
             logger.error(f"Churn prediction error: {e}")
             raise
 
-    def get_best_fraud_model(self, task: str, model_name: str = None):
-        """Get fraud model based on user choice or registry"""
+    def get_best_model(self, task: str, model_name: str = None):
+        """Get model based on user choice or registry"""
         # 1. if user specifies model -> use it
         if model_name:
             if model_name in self.fraud_models:
@@ -302,16 +302,19 @@ class ModelManager:
             
         return None, None
     
-    def predict_fraud(self, task: str, data: np.ndarray, model_name: str = None):
+    def predict(self, task: str, data: np.ndarray, model_name: str = None):
         """Make fraud prediction"""
-        model, model_name = self.get_best_fraud_model(task, model_name)
+        model, model_name = self.get_best_model(task, model_name)
         if model is None:
             raise ValueError(f"No model available for task: {task}")
         
         prediction = model.predict(data)
         probability = model.predict_proba(data)
 
-        return int(prediction[0]), float(probability[0][1]), model_name
+        pred_class = int(prediction[0])
+        probability_score = float(probability[0][pred_class])
+
+        return int(prediction[0]), probability_score, model_name
 
     def get_model_info(self) -> Dict:
         """Get information about all loaded models"""
@@ -469,8 +472,7 @@ def preprocess_fraud_input(request: FraudPredictionRequest) -> np.ndarray:
             "CreditScore", "Geography", "Gender", "Age", "Tenure",
             "Balance", "NumOfProducts", "HasCrCard", "IsActiveMember",
             "EstimatedSalary", "Exited", "Complain", "SatisfactionScore",
-            "CardType", "PointEarned",
-            "RiskScore", "BalancePerProduct", "AgeRisk",
+            "CardType", "PointEarned", "RiskScore", "BalancePerProduct", "AgeRisk",
             "HighValueCustomer", "LowCreditRisk", "ComplainFlag", "LowSatisfaction"
             ]
         """Preprocess fraud prediction input to match model features and order"""
@@ -523,7 +525,7 @@ async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: 
         
         # Convert input data to numpy array (assuming data is a dict of features)
         features = preprocess_fraud_input(request)
-        prediction, probability, model_name = model_manager.predict_fraud(task=task, 
+        prediction, probability, model_name = model_manager.predict(task=task, 
                                                                           data=features, 
                                                                           model_name=model_name)
         logger.info(f"Fraud prediction for task {task}: {prediction}, probability: {probability}")
@@ -540,18 +542,80 @@ async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: 
     except Exception as e:
         logger.error(f"Error in fraud detection endpoint: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+
+# Create a function for task to get reasons with score for marketing prediction
+def get_marketing_reasoning(request: FraudPredictionRequest, proba: float) -> str:
+    """Logic to determine the 'why' for Marketing task"""
+    if request.Complain == 1 and request.SatisfactionScore < 3:
+        return "Critical churn risk: Customer complaint with low satisfaction score"
     
+    if request.EstimatedSalary > 8000 and request.NumOfProducts < 2:
+        return "Upsell opportunity: High income with low product engagement. Action: Premium card offer"
+    elif request.EstimatedSalary < 5000 and request.NumOfProducts >= 3:
+        return "Cross-sell opportunity: Lower income but high product engagement. Action: Personal loan offer"
+    
+    if request.PointEarned > 800 and request.CardType in ['Gold', 'Platinum']:
+        return "Loyal customer: High points and premium card. Action: Exclusive rewards program"
+
 # Market Risk Prediction Endpoint
-@app.post("/predict/marketing", response_model=PredictionResponse, tags=["Predictions"])
-async def predict_marketing)
+@app.post("/predict/marketing/{task}", response_model=PredictionResponse, tags=["Predictions"])
+async def predict_marketing(task: str, request: FraudPredictionRequest, model_name: str = None):
+    """Predict marketing risk (using fraud models as proxy)"""
+    try:
+        if not model_manager.fraud_loaded:
+            raise HTTPException(status_code=503, detail='Models not available for marketing prediction')
+        
+        features = preprocess_fraud_input(request)
 
+        prediction, probability, model_name = model_manager.predict(
+            task=task,
+            data=features,
+            model_name=model_name
 
+        )
+        logger.info(f"Marketing prediction: {prediction}, probability: {probability}")
+
+        return PredictionResponse(
+            prediction=prediction,
+            probability=probability,
+            model_used=model_name,
+            timestamp=datetime.now().isoformat(),
+            task=task
+        )
+    except Exception as e:
+        logger.error(f"Error in marketing prediction endpoint: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+# Create a function for task to get reasons with score for operational risk prediction
 
 # Operation Risk Prediction Endpoint
-@app.post("/predict/operational-risk")
+@app.post("/predict/operational-risk/{task}", response_model=PredictionResponse, tags=["Predictions"])
+async def predict_operational_risk(task: str, request: FraudPredictionRequest, model_name: str = None):
+    """Predict operational risk"""
+    try:
+        if not model_manager.fraud_loaded:
+            raise HTTPException(status_code=503, detail='Models not available for operational risk prediction')
+        
+        features = preprocess_fraud_input(request)
 
+        prediction, probability, model_name = model_manager.predict(
+            task=task,
+            data=features,
+            model_name=model_name
 
+        )
+        logger.info(f"Operational risk prediction: {prediction}, probability: {probability}")
 
+        return PredictionResponse(
+            prediction=prediction,
+            probability=probability,
+            model_used=model_name,
+            timestamp=datetime.now().isoformat(),
+            task=task
+        )
+    except Exception as e:
+        logger.error(f"Error in operational risk prediction endpoint: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
 
 # ────────────────────────────────────────────────────────────────────────────
 # ROOT ENDPOINT
