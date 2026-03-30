@@ -542,13 +542,13 @@ async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: 
         raise HTTPException(status_code=400, detail=str(e))
     
 # Market Risk Prediction Endpoint
-
-
+@app.post("/predict/marketing", response_model=PredictionResponse, tags=["Predictions"])
+async def predict_marketing)
 
 
 
 # Operation Risk Prediction Endpoint
-
+@app.post("/predict/operational-risk")
 
 
 
@@ -605,5 +605,5 @@ if __name__ == "__main__":
         host=os.getenv("API_HOST", "0.0.0.0"),
         port=int(os.getenv("API_PORT", 8000)),
         workers=int(os.getenv("API_WORKERS", 4)),
-        reload=True
+        reload=False
     )
