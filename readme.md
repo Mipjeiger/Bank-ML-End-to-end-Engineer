@@ -29,7 +29,7 @@
 ## 🏦 API Production -> Models ingested to embed in Production with API Integration
 - Machine learning models Information -> Churn and Fraud (Involving Market analysis, Operational risk, Fraud detection, Credit risk analysis)
     - Machine learning models information
-    ![alt text](EEDE4B98-12BD-47EE-B2C8-5DB30E675E46.png)
+    ![alt text](Database/images/18E46D30-9ED8-4F50-80EE-1877CFCA8B35.png)
     - Customer churn prediction with probability
     ![alt text](Database/images/48CAB9E8-A072-49AC-AD63-7C585A75E6CD.png)
     - Fraud detection with models choice by users or best model chosen
