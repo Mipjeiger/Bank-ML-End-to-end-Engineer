@@ -41,7 +41,7 @@ MODEL_DIR_CHURN = BASE_DIR / "models" / "model"
 
 # Fraud Detection Model Configuration
 MODEL_DIR_FRAUD = BASE_DIR / "models" / "fraud_detection_results" / "models"
-REGISTRY_FILE_FRAUD = BASE_DIR / "models" / "fraud_detection_results" / "model_registry.json"
+REGISTRY_FILE_FRAUD = BASE_DIR / "models" / "fraud_detection_results" / "metrics" / "model_registry.json"
 
 # ────────────────────────────────────────────────────────────────────────────
 # PYDANTIC MODELS (Request/Response Schemas)

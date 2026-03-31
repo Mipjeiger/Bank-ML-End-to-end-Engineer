@@ -41,12 +41,21 @@
     Probability = 1.0 represent about the operational will getting elevated risk.
     ![alt text](Database/images/BA790BFA-B121-4147-B13C-5F2295B7113F.png)
 - Gradio -> User Interface (UI) for website implementation on Fintech real-time project condition
+    - User Interface (UI)
+
 
 - MLFlow -> Tracking machine learning models & improve metrics result on based models
     - Machine learning models metrics -> visualization on coordinates parallel plot
     ![alt text](068A3389-DA3C-47EE-BD30-07D42E7B361E.png)
     - Machine learning models metrics comparison
     ![alt text](Database/images/51D6281C-6FCF-4D07-83ED-12C473B67223.png)
+    - Metrics result comparison with scores
+    ![alt text](Database/images/BD581B4A-3357-4392-AFFD-A831725A861B.png)
+    ![alt text](Database/images/DF61392C-575F-4325-941D-C1020F66B6A7.png)
+    - Registered models
+    ![alt text](Database/images/FB4286F8-0CE9-4C06-A4CC-A8C82B35F8D7.png)
+    - List models on API
+    ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
 - Grafana & Prometheus
 
