@@ -34,9 +34,17 @@
     ![alt text](Database/images/48CAB9E8-A072-49AC-AD63-7C585A75E6CD.png)
     - Fraud detection with models choice by users or best model chosen
     ![alt text](Database/images/70A1F20A-C137-44E6-BC86-A434EFCB66D7.png)
+    - Marketing prediction with reasoning engine -> Reasoning: based on data features inputed the Decision Tree model represents prediction true label about 2 values.
+    Probability = 1.0 represent perfect of proba this means in marketing prediction has strong premis to give a reasoning.
+    ![alt text](Database/images/B7C4B085-9F0D-4989-B3D1-98FF66059463.png)
+    - Operational risk prediction with reasoning engine -> Reasoning: based on data features inputed the Decision Tree model represents prediction true label out 0 values.
+    Probability = 1.0 represent about the operational will getting elevated risk.
+    ![alt text](Database/images/BA790BFA-B121-4147-B13C-5F2295B7113F.png)
 - Gradio -> User Interface (UI) for website implementation on Fintech real-time project condition
 
-- 
+- MLFlow -> Tracking machine learning models & improve metrics result on based models
+
+- Grafana & Prometheus
 
 
 ## 🧠 Metrics output on Machine Learning models -> Churn prediction

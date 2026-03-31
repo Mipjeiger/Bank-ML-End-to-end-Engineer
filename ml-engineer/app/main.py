@@ -556,18 +556,53 @@ async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: 
 # Create a function for task to get reasons with score for marketing prediction
 def get_marketing_reasoning(request: FraudPredictionRequest, proba: float) -> str:
     """Logic to determine the 'why' for Marketing task"""
+    risk_level = "High" if proba > 0.7 else "Normal" if proba > 0.4 else "Low"
+
     if request.Complain == 1 and request.SatisfactionScore < 3:
-        return "Critical churn risk: Customer complaint with low satisfaction score"
+        return f"""
+        🚨 Critical churn risk detected:
+        - Complaint flag: {request.Complain}
+        - Satisfaction score: {request.SatisfactionScore}
+        - Risk level: {risk_level}
+        👉 Action: Immediate retention campaign (call center follow-up)
+        """
     
     if request.EstimatedSalary > 8000 and request.NumOfProducts < 2:
-        return "Upsell opportunity: High income with low product engagement. Action: Premium card offer"
-    elif request.EstimatedSalary < 5000 and request.NumOfProducts >= 3:
-        return "Cross-sell opportunity: Lower income but high product engagement. Action: Personal loan offer"
+        return f"""
+        📈 Upsell opportunity:
+        - Estimated salary: {request.EstimatedSalary}
+        - Number of products: {request.NumOfProducts}
+        - Risk level: {risk_level}
+        👉 Action: Premium card offer
+        """
+
+    if request.EstimatedSalary < 5000 and request.NumOfProducts >= 3:
+        return f"""
+        💡 Cross-sell opportunity:
+        - Estimated salary: {request.EstimatedSalary}
+        - Number of products: {request.NumOfProducts}
+        - Risk level: {risk_level}
+        👉 Action: Offer premium credit card or wealth management product
+        """
     
     if request.PointEarned > 800 and request.CardType.upper() in ['Gold', 'Platinum']:
-        return "Loyal customer: High points and premium card. Action: Exclusive rewards program"
-    
-    return "Standard Maintenance: No immediate anomalies detected."
+        return f"""
+        🌟 Loyal customer:
+        - Salary: {request.EstimatedSalary}
+        - Points earned: {request.PointEarned}
+        - Card type: {request.CardType}
+        - Risk level: {risk_level}
+        👉 Action: Offer personal loan or bundled financial product
+        """
+
+    return (
+    f"📊 Standard customer profile | "
+    f"Salary: {request.EstimatedSalary}, "
+    f"Products: {request.NumOfProducts}, "
+    f"Satisfaction: {request.SatisfactionScore}, "
+    f"Risk Level: {risk_level} | "
+    f"Action: Maintain engagement with regular marketing campaigns"
+)
 
 # Market Risk Prediction Endpoint
 @app.post("/predict/marketing/{task}", response_model=PredictionResponse, tags=["Predictions"])
@@ -604,16 +639,52 @@ async def predict_marketing(task: str, request: FraudPredictionRequest, model_na
 # Create a function for task to get reasons with score for operational risk prediction
 def get_operational_reasoning(request: FraudPredictionRequest, proba: float) -> str:
     """Logic to determine the 'why' for Operational Risk task"""
-    if request.RiskScore > 2 and request.Balance > 9000000:
-        return "High exposure risk: High risk score on large balance. Action: Credit review and potential limit reduction"
+    risk_level = "High" if proba > 0.7 else "Normal" if proba > 0.4 else "Low"
+
+    if request.Complain == 1 and request.SatisfactionScore < 3:
+        return f"""
+        🚨 High operational risk detected:
+        - Complaint flag: {request.Complain}
+        - Satisfaction score: {request.SatisfactionScore}
+        - Risk level: {risk_level}
+        👉 Action: Investigate customer service interactions and resolve issues
+        """
     
-    if request.LowCreditRisk == 1 and request.CreditScore < 500:
-        return "Credit risk anomaly: Low credit risk flag with very low credit score. Action: Immediate account review"
+    if request.Balance > 150000 and request.NumOfProducts >= 3:
+        return f"""
+        ⚠️ Potential operational risk:
+        - Balance: {request.Balance}
+        - Number of products: {request.NumOfProducts}
+        - Risk level: {risk_level}
+        👉 Action: Monitor account for unusual activity and ensure compliance
+        """
     
-    if request.IsActiveMember == 0 and request.Balance > 7650000:
-        return "Dormancy risk: Inactive member with remaining balance. Action: Reactivation campaign or account closure review"
+    if request.AgeRisk > 80 and request.CreditScore < 400:
+        return f"""
+        🔴 Critical operational risk:
+        - Age risk score: {request.AgeRisk}
+        - Credit score: {request.CreditScore}
+        - Risk level: {risk_level}
+        👉 Action: Conduct manual review and consider account restrictions
+        """
     
-    return "Operational Healthy: Account within normal risk parameters. No immediate action required."
+    if request.HighValueCustomer == 1 and request.LowCreditRisk == 0:
+        return f"""
+        🟠 Elevated operational risk:
+        - High value customer: {request.HighValueCustomer}
+        - Low credit risk: {request.LowCreditRisk}
+        - Risk level: {risk_level}
+        👉 Action: Implement enhanced monitoring and proactive communication
+        """
+    
+    return (
+    f"📊 Standard operational profile | "
+    f"Balance: {request.Balance}, "
+    f"Age risk: {request.AgeRisk}, "
+    f"Credit score: {request.CreditScore}, "
+    f"Risk Level: {risk_level} | "
+    f"Action: Maintain regular monitoring and ensure compliance with operational policies"
+)
 
 # Operation Risk Prediction Endpoint
 @app.post("/predict/operational-risk/{task}", response_model=PredictionResponse, tags=["Predictions"])
