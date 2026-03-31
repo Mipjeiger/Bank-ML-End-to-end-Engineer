@@ -134,6 +134,7 @@ class PredictionResponse(BaseModel):
     model_used: str
     timestamp: str
     task: str
+    reasoning: Optional[str] = None
 
 class HealthResponse(BaseModel):
     """Health check response schema"""
@@ -554,8 +555,10 @@ def get_marketing_reasoning(request: FraudPredictionRequest, proba: float) -> st
     elif request.EstimatedSalary < 5000 and request.NumOfProducts >= 3:
         return "Cross-sell opportunity: Lower income but high product engagement. Action: Personal loan offer"
     
-    if request.PointEarned > 800 and request.CardType in ['Gold', 'Platinum']:
+    if request.PointEarned > 800 and request.CardType.upper() in ['Gold', 'Platinum']:
         return "Loyal customer: High points and premium card. Action: Exclusive rewards program"
+    
+    return "Standard Maintenance: No immediate anomalies detected."
 
 # Market Risk Prediction Endpoint
 @app.post("/predict/marketing/{task}", response_model=PredictionResponse, tags=["Predictions"])
@@ -571,22 +574,37 @@ async def predict_marketing(task: str, request: FraudPredictionRequest, model_na
             task=task,
             data=features,
             model_name=model_name
-
         )
-        logger.info(f"Marketing prediction: {prediction}, probability: {probability}")
+
+        # Execute reasoning engine
+        reasoning = get_marketing_reasoning(request, probability)
+        logger.info(f"Task: {task} | Marketing insights for customer: {reasoning} | Risk Level: {'High' if probability > 0.7 else 'Normal'} | Prediction: {prediction} | Model: {model_name}")
 
         return PredictionResponse(
             prediction=prediction,
             probability=probability,
             model_used=model_name,
             timestamp=datetime.now().isoformat(),
-            task=task
+            task=task,
+            reasoning=reasoning
         )
     except Exception as e:
         logger.error(f"Error in marketing prediction endpoint: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 # Create a function for task to get reasons with score for operational risk prediction
+def get_operational_reasoning(request: FraudPredictionRequest, proba: float) -> str:
+    """Logic to determine the 'why' for Operational Risk task"""
+    if request.RiskScore > 2 and request.Balance > 9000000:
+        return "High exposure risk: High risk score on large balance. Action: Credit review and potential limit reduction"
+    
+    if request.LowCreditRisk == 1 and request.CreditScore < 500:
+        return "Credit risk anomaly: Low credit risk flag with very low credit score. Action: Immediate account review"
+    
+    if request.IsActiveMember == 0 and request.Balance > 7650000:
+        return "Dormancy risk: Inactive member with remaining balance. Action: Reactivation campaign or account closure review"
+    
+    return "Operational Healthy: Account within normal risk parameters. No immediate action required."
 
 # Operation Risk Prediction Endpoint
 @app.post("/predict/operational-risk/{task}", response_model=PredictionResponse, tags=["Predictions"])
@@ -602,16 +620,19 @@ async def predict_operational_risk(task: str, request: FraudPredictionRequest, m
             task=task,
             data=features,
             model_name=model_name
-
         )
-        logger.info(f"Operational risk prediction: {prediction}, probability: {probability}")
+
+        # Execute reasoning engine
+        reasoning = get_operational_reasoning(request, probability)
+        logger.info(f"Operational risk insights for customer: {reasoning} | Risk Level: {'High' if probability > 0.7 else 'Normal'} | Prediction: {prediction} | Model: {model_name}")
 
         return PredictionResponse(
             prediction=prediction,
             probability=probability,
             model_used=model_name,
             timestamp=datetime.now().isoformat(),
-            task=task
+            task=task,
+            reasoning=reasoning 
         )
     except Exception as e:
         logger.error(f"Error in operational risk prediction endpoint: {e}")
@@ -669,5 +690,5 @@ if __name__ == "__main__":
         host=os.getenv("API_HOST", "0.0.0.0"),
         port=int(os.getenv("API_PORT", 8000)),
         workers=int(os.getenv("API_WORKERS", 4)),
-        reload=False
+        reload=True
     )
