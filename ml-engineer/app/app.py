@@ -4,7 +4,7 @@ import requests
 # ================================
 # CONFIGURATION
 # ================================
-API_URL = "http://127.0.0.0:8000" # API URL for the FastAPI backend
+API_URL = "http://127.0.0.1:8000" # API URL for the FastAPI backend
 
 MODEL_OPTIONS = [
     "Logistic Regression",
@@ -25,7 +25,7 @@ CARD_OPTIONS = ["DIAMOND", "GOLD", "PLATINUM", "SILVER"]
 def call_api(endpoint, payload, model_name):
     try:
         response = requests.post(
-            f"{API_URL}/{endpoint}",
+            f"{API_URL}{endpoint}",
             json=payload,
             params={"model_name": model_name}
         )
@@ -133,16 +133,14 @@ with gr.Blocks(title="🏦 Fintech Intelligence System") as demo:
         gr.Interface(
             fn=predict_marketing,
             inputs=inputs,
-            outputs=gr.Textbox(label="Result"),
-            #allow_flagging="never"
+            outputs=gr.Textbox(label="Result")
         )
 
     with gr.Tab("⚙️ Operational Risk Prediction"):
         gr.Interface(
             fn=predict_operational,
             inputs=inputs,
-            outputs=gr.Textbox(label="Result"),
-            #allow_flagging="never"
+            outputs=gr.Textbox(label="Result")
         )
 
 # ================================
