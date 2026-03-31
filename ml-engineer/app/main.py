@@ -529,15 +529,24 @@ async def predict_fraud(task: str, request: FraudPredictionRequest, model_name: 
         prediction, probability, model_name = model_manager.predict(task=task, 
                                                                           data=features, 
                                                                           model_name=model_name)
+        
+        # Add logic reasoning based on task and input features
+        reasoning = None
+        if task.lower() == "marketing":
+            reasoning = get_marketing_reasoning(request, probability)
+        elif task.lower() in ["operational", "operational-risk"]:
+            reasoning = get_operational_reasoning(request, probability)
+
         logger.info(f"Fraud prediction for task {task}: {prediction}, probability: {probability}")
 
-        return {
-            "prediction": prediction,
-            "probability": probability,
-            "model_used": model_name,
-            "timestamp": datetime.now().isoformat(),
-            "task": task
-        }
+        return PredictionResponse(
+            prediction=prediction,
+            probability=probability,
+            model_used=model_name,
+            timestamp=datetime.now().isoformat(),
+            task=task,
+            reasoning=reasoning
+        )
     except Exception as e:
         raise
     except Exception as e:
