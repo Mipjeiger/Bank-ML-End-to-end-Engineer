@@ -60,6 +60,10 @@
     - List models on API
     ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
+- LLM -> Large Language Models for Banking solution for simplify complex problem
+    - Banking LLM AI insights
+    ![alt text](Database/images/4BF5C5CD-D301-478C-81FB-DBF6446AF146.png)
+
 - Grafana & Prometheus
 
 
