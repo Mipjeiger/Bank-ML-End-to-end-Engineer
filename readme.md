@@ -61,7 +61,7 @@
     ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
 - LLM -> Large Language Models for Banking solution for simplify complex problem
-    - Banking LLM AI insights
+    - Banking LLM AI insights (Credit: https://www.getdynamiq.ai/post/generative-ai-and-llms-in-banking-examples-use-cases-limitations-and-solutions)
     ![alt text](Database/images/4BF5C5CD-D301-478C-81FB-DBF6446AF146.png)
 
 - Grafana & Prometheus
