@@ -1,11 +1,11 @@
 {
     "Model": "Random Forest",
     "Metrics": {
-        "Accuracy": 0.9385,
-        "Precision": 0.3389830508474576,
-        "Recall": 0.9090909090909091,
-        "F1 Score": 0.49382716049382713,
-        "ROC AUC": 0.9614161261007177,
-        "Best Threshold": 0.35
+        "Accuracy": 0.9325,
+        "Precision": 0.32663316582914576,
+        "Recall": 0.9848484848484849,
+        "F1 Score": 0.49056603773584906,
+        "ROC AUC": 0.9601939769985272,
+        "Best Threshold": 0.25
     }
 }
