@@ -66,9 +66,10 @@
 
 - Grafana & Prometheus
 
-## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report (LLMs Dir: ml-engineer/notebooks/Banking_llm_insights_report.md)
+## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns
 **Churn Rate:** 20.38% | **Fraud Rate:** 3.32%
+**LLMs Directory: ml-engineer/notebooks/Banking_llm_insights_report.md**
 
 ---
 
