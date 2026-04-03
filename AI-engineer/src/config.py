@@ -13,6 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_PATH = BASE_DIR / "Database" / "data" / "eda_banking.parquet"
 PDF_DIR    = BASE_DIR / "Database" / "PDF"
 REPORT_MD = BASE_DIR / "ml-engineer" / "notebooks" / "Banking_llm_insights_report.md"
+MODELS_DIR = BASE_DIR / "ml-engineer" / "models" / "banking_models" / "models"
 
 PDF_PATHS = list(PDF_DIR.glob("*.pdf"))
 

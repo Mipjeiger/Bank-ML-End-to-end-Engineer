@@ -1,4 +1,5 @@
 import pandas as pd
+import torch
 from tqdm import tqdm
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -50,3 +51,11 @@ def build_retriever():
         chunks.extend(splitter.split_documents([doc]))
 
     # Embed + FAISS
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        encode_kwargs={"normalize_embeddings": True},
+        model_kwargs={"device": "mps" if torch.backends.mps.is_available() else "cpu"}
+    )
+    vectorstore = FAISS.from_documents(chunks, embeddings)
+    
+    return vectorstore.as_retriever(search_kwargs={"k": TOP_K})
