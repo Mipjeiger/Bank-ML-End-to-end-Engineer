@@ -6,7 +6,7 @@ from src.integration import load_dataframe, build_retriever
 from src.llm import ask
 from src.report_parser import REPORT_DATA
 
-from src.model_loader import evaluate_model, evaluate_all_problems, MODEL_REGISTRY
+from src.model_loader import evaluate_models, evaluate_all_problems, MODEL_REGISTRY
 # Shared state
 state = {}
 
@@ -42,6 +42,7 @@ class AnswerResponse(BaseModel):
 
 class ProblemRequest(BaseModel):
     problem: str # "fraud" | "marketing" | "operational"
+    with_reasoning: bool = False
 
 # Routes
 @app.get("/")
@@ -85,21 +86,46 @@ def list_models():
     return {problem: list(models.keys()) for problem, models in MODEL_REGISTRY.items()}
 
 @app.get("/models/{problem}")
-def get_best_model(problem: str):
-    """Return ranked model performance + best mdel recommendation
+def get_best_model(problem: str, with_reasoning: bool = False):
+    """Return ranked model performance + best model recommendation
     for a specific problem: fraud | marketing | operational."""
     if problem not in MODEL_REGISTRY:
         raise HTTPException(status_code=400, detail=f"Invalid problem '{problem}'. Problem must be one of {list(MODEL_REGISTRY.keys())}")
-    # return cached result from startup evaluation
-    return state["model_results"][problem]
+   
+    if not with_reasoning:
+        return state["model_results"][problem]
+    
+    # Generate fresh result with LLM reasoning
+    from src.model_loader import evaluate_models
+    return evaluate_models(
+        problem=problem,
+        df_summary=state["df_summary"],
+        retriever=state["retriever"],
+        with_reasoning=True
+    )
 
-@app.post("/ask", response_model=AnswerResponse)
-def ask_question(body: QuestionRequest):
-    """Ask any custom question - runs live RAG pipeline."""
-    if not body.question.strip():
-        raise HTTPException(status_code=400, detail="Question cannot be empty")
-    result = ask(body.question, state["retriever"], state["df_summary"])
-    return AnswerResponse(**result)
+@app.get("/models/compare/all")
+def compare_all_models():
+    """Compare best model across all 3 problems. Returns a leaderboard summary."""
+    results = state["model_results"]
+    leaderboard = []
+
+    for problem, data in results.items():
+        leaderboard.append({
+            "problem": problem,
+            "best_model": data["best_model"],
+            "best_score": data["best_score"],
+            "target_column": data["target_column"],
+            "recommendation": data["recommendation"],
+        })
+
+    # Sort by best_score descending
+    leaderboard.sort(key=lambda x: x["best_score"] or 0, reverse=True)
+
+    return {
+        "leaderboard": leaderboard,
+        "overall_winner": leaderboard[0] if leaderboard else None
+    }
 
 @app.post("/ask/insight", response_model=AnswerResponse)
 def ask_insight(insight_id: int, body: QuestionRequest):
@@ -118,4 +144,26 @@ def summary_report(body: QuestionRequest):
     result = ask(body.question, state["retriever"], state["df_summary"])
     return AnswerResponse(**result)
 
-# Post endpoint -> 
+@app.post("/models/evaluate")
+def evaluate_on_demand(body: ProblemRequest):
+    """Re-evaluate on demand. Set with_reasoning=True in body to get LLM-powered reasoning."""
+    
+    class ProblemRequest(BaseModel):
+        problem: str
+        with_reasoning: bool = False
+
+    if body.problem not in MODEL_REGISTRY:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid problem. Choose: {list(MODEL_REGISTRY.keys())}"
+        )
+    
+    from src.model_loader import evaluate_models
+    result = evaluate_models(
+        problem=body.problem,
+        df_summary=state["df_summary"],
+        retriever=state["retriever"],
+        with_reasoning=body.with_reasoning
+    )
+    state["model_results"][body.problem] = result  # Update shared state with new evaluation
+    return result

@@ -54,7 +54,7 @@ def build_retriever():
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
         encode_kwargs={"normalize_embeddings": True},
-        model_kwargs={"device": "mps" if torch.backends.mps.is_available() else "cpu"}
+        model_kwargs={"device": "mps" if torch.backends.mps.is_available() else "auto"}
     )
     vectorstore = FAISS.from_documents(chunks, embeddings)
     

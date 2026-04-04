@@ -2,10 +2,12 @@ import pickle
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from src.config import DATA_PATH
+from src.config import DATA_PATH, HF_TOKEN, MODEL_ID
+from huggingface_hub import InferenceClient
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 MODELS_DIR = BASE_DIR / "ml-engineer" / "models" / "banking_models" / "models"
+client = InferenceClient(model=MODEL_ID, token=HF_TOKEN)
 
 # Model Registry
 MODEL_REGISTRY = {
@@ -32,24 +34,24 @@ MODEL_REGISTRY = {
     },
 }
 
-# ── Feature map per problem ───────────────────────────────────
-FEATURE_MAP = {
-    "fraud": [
-        "CreditScore", "Age", "Tenure", "Balance",
-        "NumOfProducts", "HasCrCard", "IsActiveMember",
-        "EstimatedSalary", "RiskScore", "OperationalRiskScore",
-    ],
-    "marketing": [
-        "CreditScore", "Age", "Balance", "EstimatedSalary",
-        "NumOfProducts", "IsActiveMember", "Point Earned",
-        "Satisfaction Score", "HighValueCustomer", "MarketingScore",
-    ],
-    "operational": [
-        "CreditScore", "Age", "Tenure", "Balance",
-        "NumOfProducts", "HasCrCard", "IsActiveMember",
-        "RiskScore", "BalancePerProduct", "AgeRisk",
-        "LowCreditRisk", "OperationalRiskScore",
-    ],
+# Features map per problem
+RAW_FEATURES = [
+    "CreditScore", "Geography", "Gender", "Age", "Tenure",
+    "Balance", "NumOfProducts", "HasCrCard", "IsActiveMember",
+    "EstimatedSalary", "Complain", "Satisfaction Score",
+    "Card Type", "Point Earned", "RiskScore", "BalancePerProduct",
+    "AgeRisk", "HighValueCustomer", "LowCreditRisk",
+    "ComplainFlag", "LowSatisfaction",
+]
+
+# ── Categorical columns that need encoding ────────────────────
+CATEGORICAL_COLS = ["Geography", "Gender", "Card Type"]
+
+# ── Known category values (from your training data) ──────────
+CATEGORY_VALUES = {
+    "Geography" : ["France", "Germany", "Spain"],
+    "Gender"    : ["Female", "Male"],
+    "Card Type" : ["DIAMOND", "GOLD", "PLATINUM", "SILVER"],
 }
 
 # ── Target map per problem ────────────────────────────────────
@@ -59,13 +61,19 @@ TARGET_MAP = {
     "operational" : "OperationalRiskScore",
 }
 
+# Preprocessing - encode categorical features to match training
+
 # Function to load a model
 def load_model(pkl_path: Path):
     with open(pkl_path, "rb") as f:
         print(f"🔄 Loading model from {pkl_path.name}...")
         return pickle.load(f)
 
-def evaluate_model(problem: str) -> dict:
+def evaluate_models(problem: str,
+                   df_summary: str = "",
+                   retriever = None,
+                   with_reasoning: bool = False
+                   ) -> dict:
     """Load all models for a given problem, score them on the parquet dataset.
     and return ranked results with the best model recommendation."""
 
@@ -79,10 +87,10 @@ def evaluate_model(problem: str) -> dict:
     target = TARGET_MAP[problem]
 
     # fillna missing values with dropna
-    availabe_features = [f for f in features if f in df.columns]
-    df_clean = df[availabe_features + [target]].dropna()
+    available_features = [f for f in features if f in df.columns]
+    df_clean = df[available_features + [target]].dropna()
 
-    X = df_clean[availabe_features]
+    X = df_clean[available_features]
     y = df_clean[target]
 
     results = []
@@ -141,22 +149,36 @@ def evaluate_model(problem: str) -> dict:
 
     best = results[0] if results else None
 
-    return {
-        "problem": problem,
-        "target_column": target,
-        "features_used": availabe_features,
-        "total_models": len(results),
-        "ranked_models": results,
-        "best_model": best["model"] if best else None,
-        "best_score": best["score"] if best else None,
-        "recommendation": _recommendation(problem, best["model"] if best else "N/A")
+    result = {
+        "problem"        : problem,
+        "target_column"  : target,
+        "features_used"  : available_features,
+        "total_models"   : len(results),
+        "ranked_models"  : results,
+        "best_model"     : best["model"] if best else None,
+        "best_score"     : best["score"] if best else None,
+        "recommendation" : _recommendation(problem, best["model"] if best else "N/A"),
+        "reasoning"      : None,   # populated below if requested
     }
+    
+    # Generate LLM reasoning if requested
+    if with_reasoning and best and retriever and df_summary:
+        from src.reasoning import generate_reasoning
+        result["reasoning"] = generate_reasoning(
+            problem=problem,
+            best_model=best["model"],
+            ranked_models=results,
+            df_summary=df_summary,
+            retriever=retriever
+        )
+
+    return result
 
 def evaluate_all_problems():
     """Run evaluation across all 3 problems and return overall best per problem."""
     summary = {}
     for problem in MODEL_REGISTRY:
-        summary[problem] = evaluate_model(problem)
+        summary[problem] = evaluate_models(problem)
     return summary
 
 def _recommendation(problem: str, best_model: str) -> str:

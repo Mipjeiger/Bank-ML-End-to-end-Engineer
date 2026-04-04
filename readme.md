@@ -61,8 +61,19 @@
     ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
 - LLM -> Large Language Models for Banking solution for simplify complex problem
+- LLM thoughts -> as LLMs disclaimer isn't defending this choice on the claim LLMs are accurate models from human cognition. In banking sector environment depend on case LLM can provide a useful structural priority to answer the banking problems through key of comparative statistics LLMs model embed.
     - Banking LLM AI insights (Credit: https://www.getdynamiq.ai/post/generative-ai-and-llms-in-banking-examples-use-cases-limitations-and-solutions)
     ![alt text](Database/images/4BF5C5CD-D301-478C-81FB-DBF6446AF146.png)
+    - Banking LLM User Interface (UI) for banking solution in Report Insights
+    ![alt text](Database/images/FA8FF2CE-1181-4D30-88F9-56FA62DC0BC3.png)
+    - Banking LLM UI for question as problem decision making helper
+    ![alt text](Database/images/DE6EC6A9-A9BF-4589-9FC6-E272EADAE0D6.png)
+    - Banking LLM in answering question to get insights
+    ![alt text](Database/images/9ABD266C-6350-4783-88C7-636C568D2F84.png)
+    - Banking LLM in answering question with simple characters
+    ![alt text](Database/images/103980E7-3631-4749-AAFC-016380C514AE.png)
+    - Banking LLM in Summary report explanation
+    ![alt text](Database/images/A4D2E73E-B032-46E4-B659-A57FCCE3D2D0.png)
 
 - Grafana & Prometheus
 
