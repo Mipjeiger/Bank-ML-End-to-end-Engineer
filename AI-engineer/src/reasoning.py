@@ -29,7 +29,7 @@ PROBLEM_CONTEXT = {
     },
 }
 
-def generate_reasoning(
+def reasoning_engine(
         problem: str,
         best_model: str,
         ranked_models: list,
