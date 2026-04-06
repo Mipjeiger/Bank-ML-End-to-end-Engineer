@@ -49,7 +49,7 @@
 
 - MLFlow -> Tracking machine learning models & improve metrics result on based models
     - Machine learning models metrics -> visualization on coordinates parallel plot
-    ![alt text](068A3389-DA3C-47EE-BD30-07D42E7B361E.png)
+    ![alt text](<Database/images/068A3389-DA3C-47EE-BD30-07D42E7B361E copy.png>)
     - Machine learning models metrics comparison
     ![alt text](Database/images/51D6281C-6FCF-4D07-83ED-12C473B67223.png)
     - Metrics result comparison with scores
