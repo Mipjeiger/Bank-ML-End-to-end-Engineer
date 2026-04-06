@@ -74,6 +74,12 @@
     ![alt text](Database/images/103980E7-3631-4749-AAFC-016380C514AE.png)
     - Banking LLM in Summary report explanation
     ![alt text](Database/images/A4D2E73E-B032-46E4-B659-A57FCCE3D2D0.png)
+    - Banking LLM in gradio as User Interface (UI) inference to answer the questions
+    ![alt text](Database/images/8E018A7C-9306-4E35-8AF2-B7240828BFFA.png)
+    - Banking LLM answer insights from PDFs sources
+    ![alt text](Database/images/784EBFD2-C24B-4A01-A8E7-97D762914AA8.png)
+    - Banking LLM insights for answering about factors of fraud
+    ![alt text](Database/images/30957B22-8DA3-4423-AC91-CA6FB117F97B.png)
 
 - Grafana & Prometheus
 
@@ -133,7 +139,6 @@ In the context of the provided dataset, GenAI can be used to analyze the followi
 * **Transaction Volume**: This can be used as a feature for fraud detection models, as high transaction volumes may indicate suspicious activity
 
 By leveraging these metrics and using the recommended ML and LLM approaches, GenAI can improve real-time fraud flagging pipelines in
-
 
 ---
 

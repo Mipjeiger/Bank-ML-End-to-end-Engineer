@@ -12,34 +12,45 @@ def fetch_report_insights():
 
 
 def fetch_insight(insight_id: int):
-    resp = requests.get(f"{API_URL}/report/insights/{insight_id}")
-    if resp.ok:
-        data = resp.json()
-        return f"### {data['title']}\n\n{data['content']}"
-    return "❌ Insight not found."
+    try:
+        resp = requests.get(f"{API_URL}/report/insights/{insight_id}", timeout=10)
+        if resp.ok:
+            data = resp.json()
+            return f"### {data['title']}\n\n{data['content']}"
+        return f"❌ Error {resp.status_code}: {resp.text}"
+    except Exception as e:
+        return f"❌ Cannot reach API: {e}"
 
 
 def ask_question(question: str):
     if not question.strip():
         return "⚠️ Please enter a question.", []
-    resp = requests.post(f"{API_URL}/ask", json={"question": question})
-    if resp.ok:
-        data    = resp.json()
-        sources = "\n".join([f"📄 {s}" for s in data["sources"]])
-        return data["answer"], sources
-    return f"❌ Error: {resp.text}", ""
-
+    try:
+        resp = requests.post(f"{API_URL}/ask", json={"question": question}, timeout=60, headers={"Content-Type": "application/json"})
+        if resp.ok:
+            data    = resp.json()
+            sources = "\n".join([f"📄 {s}" for s in data["sources"]])
+            return data["answer"], sources
+        return f"❌ Error: {resp.text}", ""
+    except requests.exceptions.ConnectionError:
+        return "❌ Cannot connect to API. Is uvicorn running on port 8000?", ""
+    except requests.exceptions.Timeout:
+        return "❌ API request timed out. LLM is taking too long.", ""
+    except Exception as e:
+        return f"❌ An error occurred: {e}", ""
 
 def fetch_dataset_summary():
-    resp = requests.get(f"{API_URL}/dataset/summary")
-    if resp.ok:
-        d = resp.json()
-        return (f"**Rows:** {d['rows']:,} | **Columns:** {d['columns']}\n\n"
-                f"**Churn Rate:** {d['churn_rate']} | "
-                f"**Fraud Rate:** {d['fraud_rate']} | "
-                f"**Complain Rate:** {d['complain_rate']}")
-    return "❌ Could not load summary."
-
+    try:
+        resp = requests.get(f"{API_URL}/dataset/summary", timeout=10)
+        if resp.ok:
+            d = resp.json()
+            return (f"**Rows:** {d['rows']:,} | **Columns:** {d['columns']}\n\n"
+                    f"**Churn Rate:** {d['churn_rate']} | "
+                    f"**Fraud Rate:** {d['fraud_rate']} | "
+                    f"**Complain Rate:** {d['complain_rate']}")
+        return f"⚠️ API returned {resp.status_code}"
+    except Exception as e:
+        return f"❌ Cannot reach API: {e}"
 
 # ── UI ────────────────────────────────────────────────────────
 with gr.Blocks(title="🏦 Banking LLM Insights", theme=gr.themes.Soft()) as demo:
@@ -75,6 +86,7 @@ with gr.Blocks(title="🏦 Banking LLM Insights", theme=gr.themes.Soft()) as dem
             ask_btn    = gr.Button("Ask", variant="primary")
             answer_out = gr.Markdown(label="Answer")
             source_out = gr.Textbox(label="📚 Sources", interactive=False)
+            
             ask_btn.click(
                 fn      = ask_question,
                 inputs  = question_input,

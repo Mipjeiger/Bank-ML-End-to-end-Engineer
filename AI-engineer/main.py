@@ -127,6 +127,15 @@ def compare_all_models():
         "overall_winner": leaderboard[0] if leaderboard else None
     }
 
+# Endpoint for gradio
+@app.post("/ask", response_model=AnswerResponse)
+def ask_question(body: QuestionRequest):
+    """Ask any custom question - runs live RAG pipeline."""
+    if not body.question.strip():
+        raise HTTPException(status_code=400, detail="Question cannot be empty")
+    result = ask(body.question, state["retriever"], state["df_summary"])
+    return AnswerResponse(**result)
+
 @app.post("/ask/insight", response_model=AnswerResponse)
 def ask_insight(insight_id: int, body: QuestionRequest):
     """Ask a question in the context of a specific insight."""
