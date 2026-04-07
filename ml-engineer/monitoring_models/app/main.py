@@ -6,6 +6,7 @@ from typing import List
 
 from app.model_loader import load_models
 from app.predictor import predict
+from app.preprocessing import preprocess_input
 
 # Execute the model loading function at startup
 app = FastAPI(title="ML Model Monitoring API")
@@ -22,7 +23,29 @@ def startup_event():
 
 # Define request schema
 class PredictionRequest(BaseModel):
-    data: List[float] = Field(..., examples=[[0.1, 0.2, 0.3, 0.4, 0.5]])
+    CreditScore: int
+    Geography: str
+    Gender: str
+    Age: int
+    Tenure: int
+    Balance: float
+    NumOfProducts: int
+    HasCrCard: bool
+    IsActiveMember: bool
+    EstimatedSalary: float
+    Exited: bool
+    Complain: bool
+    SatisfactionScore: int
+    CardType: str
+    PointEarned: int
+    RiskScore: int
+    BalancePerProduct: float
+    AgeRisk: bool
+    HighValueCustomer: bool
+    LowCreditRisk: bool
+    ComplainFlag: bool
+    LowSatisfaction: bool
+    
 
 # Endpoint for making predictions
 @app.get("/")
@@ -39,14 +62,18 @@ def run_prediction(category: str, model_name: str, request: PredictionRequest):
         if model_name not in models[category]:
             raise HTTPException(status_code=404, detail="Model not found in category")
         
-        result = predict(models, category, model_name, request.data)
+        # Convert pydantic -> dict
+        raw_data = request.dict()
+
+        processed_data = preprocess_input(raw_data)
+        result = predict(models, category, model_name, processed_data)
 
         return {"category": category,
-                "model": model_name,
-                "prediction": result}
+                "prediction": result,
+                "model": model_name,}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        return {"error": str(e)}
 
 # Prometheus metrics endpoint
 @app.get("/metrics")
