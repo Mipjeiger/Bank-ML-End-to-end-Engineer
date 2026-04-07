@@ -79,7 +79,8 @@
     - Banking LLM insights for answering about factors of fraud from PDFs sources
     ![alt text](Database/images/30957B22-8DA3-4423-AC91-CA6FB117F97B.png)
 
-- Grafana & Prometheus
+- Grafana & Prometheus for models monitoring
+
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns
