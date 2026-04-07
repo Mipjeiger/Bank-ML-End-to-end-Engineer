@@ -16,9 +16,10 @@ def preprocess_input(data: dict):
     }
 
     card_type_map = {
-        "SILVER": 0,
-        "GOLD": 1,
-        "PLATINUM": 2
+       "DIAMOND": 0,
+       "GOLD": 1,
+       "SILVER": 2,
+       "PLATINUM": 3
     }
 
     # Convert input

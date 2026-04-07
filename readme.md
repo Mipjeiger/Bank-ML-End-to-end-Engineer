@@ -48,16 +48,17 @@
 
 
 - MLFlow -> Tracking machine learning models & improve metrics result on based models
-    - Machine learning models metrics -> visualization on coordinates parallel plot
+    - Experiment visualization: Using Parallel Coordinates Plots, we can instantly see the relationship between hyperparameters and performance. The "red" paths represent our champion models, predominantly XGBoost, which achieved the highest stability across all metrics.
     ![alt text](<Database/images/068A3389-DA3C-47EE-BD30-07D42E7B361E copy.png>)
-    - Machine learning models metrics comparison
+    - Multi-Metric Evaluation: Beyond simple accuracy, we tracked Precision, Recall, and F1-Score. This is critical for our Fraud Detection task, where balancing the detection of fraudulent transactions against user friction is a top priority.
     ![alt text](Database/images/51D6281C-6FCF-4D07-83ED-12C473B67223.png)
-    - Metrics result comparison with scores
+    - Optimal Thresholding: MLflow helped identify that a higher classification threshold (approximately. 0.85) significantly improved model reliability for operational tasks.
     ![alt text](Database/images/BD581B4A-3357-4392-AFFD-A831725A861B.png)
     ![alt text](Database/images/DF61392C-575F-4325-941D-C1020F66B6A7.png)
-    - Registered models
+    - Box plot with 5 algorithms comparison -> XGBoost is a stable model in the top cluster (followed by K-Nearest Neighbors (KNN)) based on the performance values (max: 1, q3: 0.999874, median: 0.999497, q1: 0.5930945, min: 0.4576271)
+    ![alt text](Database/images/7F92B2F3-736C-498C-8D03-E352E106145E.png)
+    - Model Registry & Deployment: Every high-performing run is versioned in the MLflow Model Registry, allowing for seamless transition from training to our FastAPI-based production environment.
     ![alt text](Database/images/FB4286F8-0CE9-4C06-A4CC-A8C82B35F8D7.png)
-    - List models on API
     ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
 - LLM -> Large Language Models for Banking solution for simplify complex problem
@@ -81,6 +82,24 @@
 
 - Grafana & Prometheus for models monitoring
 
+- Prometheus
+    - Hierarcy models request total based on request calls on API's integrations by instances in host.docker.internal with job ml_models
+        - 1. models request total -> Model_name: XGBoost_Operational, Category: Operational
+        ![alt text](Database/images/DB42418B-FA1A-41D3-8A12-53263675EE4F.png)
+        - 2. models request total -> Model_name: Decision_Tree_Operational, Category: Operational
+        ![alt text](Database/images/0A9E1C40-C6C6-42D7-8D53-7C380F4CF030.png)
+        - 3. models request total -> Model_name: Decision_Tree_Marketing, Category: Marketing
+        ![alt text](Database/images/50D8486C-8207-4FB0-B8F1-A63E8C472769.png)
+        - 4. models request total -> Model_name: Random_Forest_Fraud, Category: Fraud
+        ![alt text](Database/images/D6C1105A-5FE5-41F8-BD9F-FAC7923435C7.png)
+        - 5. models request total -> Model_name: Decision_Tree_Fraud, Category: Fraud
+        ![alt text](Database/images/D6C1105A-5FE5-41F8-BD9F-FAC7923435C7.png)
+    - Comparison metric models with query request "model_request_total"
+        - model_name= "Decision_Tree_Operational"
+        ![alt text](Database/images/522B3381-6890-48D3-85C0-5586F7344B86.png)
+        - model_name= "Random_Forest_Fraud"
+        ![alt text](Database/images/96C214CE-2FDD-4456-B3AC-379AC6E6D921.png)
+
 - Grafana
     - Models metric monitoring for ensure models tracking, health, performance, and behavior of a deployed machine learning model in MLOps (Machine Learning Operations) model-driven environment.
     - Models metrics 1st pic
@@ -89,6 +108,11 @@
     ![alt text](Database/images/F392AA28-6602-46D5-8805-5D57219D68A2.png)
     - Models metrics 3rd pic
     ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
+
+- Slack (for event in advantage & disadvantage actions)
+    - Slack getting advantage notifications
+
+    - Slack getting disadvantage notifications
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns
