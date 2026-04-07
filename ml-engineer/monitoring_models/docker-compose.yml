@@ -1,15 +1,9 @@
 version: "3.8"
 
 services:
-  app:
-    build: .
-    ports:
-      - "8005:8005"
-    volumes:
-      - ../models/banking_models/models:/models
-  
   prometheus:
     image: prom/prometheus
+    container_name: prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -17,5 +11,6 @@ services:
 
   grafana:
     image: grafana/grafana
+    container_name: grafana
     ports:
       - "3000:3000"

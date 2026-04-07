@@ -1,6 +1,6 @@
 import os
 
-BASE_MODEL_PATH = "/models"
+BASE_MODEL_PATH = os.path.abspath("../models/banking_models/models")
 
 MODEL_FILES = {
     "fraud": [
