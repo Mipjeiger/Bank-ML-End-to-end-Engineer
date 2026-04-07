@@ -4,3 +4,4 @@ joblib
 scikit-learn
 prometheus-client
 pydantic
+xgboost

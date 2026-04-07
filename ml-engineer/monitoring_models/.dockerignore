@@ -1,0 +1,86 @@
+# =========================
+# 🔥 Python cache
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.so
+
+# =========================
+# 🧠 Virtual environments
+# =========================
+venv/
+env/
+.venv/
+ENV/
+
+# =========================
+# 🗂️ Git & version control
+# =========================
+.git/
+.gitignore
+
+# =========================
+# 📓 Jupyter / notebooks
+# =========================
+*.ipynb
+.ipynb_checkpoints/
+
+# =========================
+# 📦 Large ML model files
+# =========================
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.onnx
+
+# ⚠️ IMPORTANT:
+# If you NEED models inside container,
+# comment the above and mount volume instead
+
+# =========================
+# 📊 Data files
+# =========================
+data/
+datasets/
+*.csv
+*.parquet
+*.xlsx
+
+# =========================
+# 🪵 Logs & temp files
+# =========================
+logs/
+*.log
+tmp/
+temp/
+
+# =========================
+# 🐳 Docker artifacts
+# =========================
+docker-compose.yml
+Dockerfile
+
+# (optional: keep Dockerfile if building from same dir)
+# !Dockerfile
+
+# =========================
+# 🖥️ OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# ⚙️ IDE / Editor configs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# 🔐 Environment variables
+# =========================
+.env
+.env.*
