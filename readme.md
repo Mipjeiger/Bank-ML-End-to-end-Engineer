@@ -81,7 +81,6 @@
     ![alt text](Database/images/30957B22-8DA3-4423-AC91-CA6FB117F97B.png)
 
 - Grafana & Prometheus for models monitoring
-
 - Prometheus
     - Hierarcy models request total based on request calls on API's integrations by instances in host.docker.internal with job ml_models
         - 1. models request total -> Model_name: XGBoost_Operational, Category: Operational
