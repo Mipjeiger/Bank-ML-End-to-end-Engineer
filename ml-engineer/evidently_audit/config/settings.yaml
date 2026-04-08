@@ -7,9 +7,9 @@ paths:
 split_ratio: 0.6
 
 model_thresholds:
-  accuracy:              0.75
-  precision:             0.70
-  recall:                0.65
+  accuracy:              0.80
+  precision:             0.72
+  recall:                0.75
   f1:                    0.70
   roc_auc:               0.75
   max_drifted_columns:   3

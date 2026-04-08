@@ -115,6 +115,14 @@
 
     - Evidently for data evaluation
 
+    - Logs of running each .py in evidently
+        """
+        python3 run_audit.py
+        python3 run_audit.py --audit model
+        python3 run_audit.py --audit data
+        python3 run_audit.py --audit LLM
+        """
+
 - Deploy on EvidentlyAI Cloud
 
 - Slack (for event in advantage & disadvantage actions)
