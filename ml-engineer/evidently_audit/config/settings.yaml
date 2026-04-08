@@ -1,0 +1,47 @@
+paths:
+  data:       "data/raw/eda_banking.parquet"
+  models_dir: "data/models"
+  reports:    "reports"
+  llm_eval:   "data/eval_datasets/llm_eval.csv"
+
+split_ratio: 0.6
+
+model_thresholds:
+  accuracy:              0.75
+  precision:             0.70
+  recall:                0.65
+  f1:                    0.70
+  roc_auc:               0.75
+  max_drifted_columns:   3
+  max_missing_share:     0.05
+
+data_thresholds:
+  max_missing_share:        0.05
+  max_duplicate_rows:       100
+  max_drifted_columns:      5
+  min_rows:                 1000
+  drift_stattest_threshold: 0.05
+
+llm_thresholds:
+  min_response_length:  20
+  max_response_length:  2000
+  max_refusal_rate:     0.10
+  min_grounding_rate:   0.60
+  min_overlap_score:    0.30
+
+model_registry:
+  Decision_Tree_Fraud.pkl:              { domain: Fraud,       target: fraud_label }
+  Logistic_Regression_Fraud.pkl:        { domain: Fraud,       target: fraud_label }
+  KNN_Fraud.pkl:                        { domain: Fraud,       target: fraud_label }
+  Random_Forest_Fraud.pkl:              { domain: Fraud,       target: fraud_label }
+  XGBoost_Fraud.pkl:                    { domain: Fraud,       target: fraud_label }
+  Decision_Tree_Marketing.pkl:          { domain: Marketing,   target: churn }
+  Logistic_Regression_Marketing.pkl:    { domain: Marketing,   target: churn }
+  KNN_Marketing.pkl:                    { domain: Marketing,   target: churn }
+  Random_Forest_Marketing.pkl:          { domain: Marketing,   target: churn }
+  XGBoost_Marketing.pkl:                { domain: Marketing,   target: churn }
+  Decision_Tree_Operational.pkl:        { domain: Operational, target: default_risk }
+  Logistic_Regression_Operational.pkl:  { domain: Operational, target: default_risk }
+  KNN_Operational.pkl:                  { domain: Operational, target: default_risk }
+  Random_Forest_Operational.pkl:        { domain: Operational, target: default_risk }
+  XGBoost_Operational.pkl:              { domain: Operational, target: default_risk }

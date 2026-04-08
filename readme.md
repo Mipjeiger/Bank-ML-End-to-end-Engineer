@@ -114,6 +114,10 @@
 
     - Evidently for ML Models monitoring
 
+    - Evidently for data evaluation
+
+- Deploy on EvidentlyAI Cloud
+
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
 
