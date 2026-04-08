@@ -102,17 +102,28 @@
 
 - Grafana
     - Models metric monitoring for ensure models tracking, health, performance, and behavior of a deployed machine learning model in MLOps (Machine Learning Operations) model-driven environment.
-    - Models metrics 1st pic
-    ![alt text](Database/images/7FB05999-4448-4087-8587-3F60BC746BAD.png)
-    - Models metrics 2nd pic
-    ![alt text](Database/images/F392AA28-6602-46D5-8805-5D57219D68A2.png)
-    - Models metrics 3rd pic
-    ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
+        - Models metrics 1st pic
+        ![alt text](Database/images/7FB05999-4448-4087-8587-3F60BC746BAD.png)
+        - Models metrics 2nd pic
+        ![alt text](Database/images/F392AA28-6602-46D5-8805-5D57219D68A2.png)
+        - Models metrics 3rd pic
+        ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
+
+- Evidently AI for evaluation data drifting
+    - Evidently for LLMs evaluation
+
+    - Evidently for ML Models monitoring
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
 
     - Slack getting disadvantage notifications
+
+- CI/CD pipelines for automation comprehensive
+
+- Deploy models on cloud (Optional: Try deploy on railway)
+
+- Deploy LLMs gradio on Huggingface
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns
