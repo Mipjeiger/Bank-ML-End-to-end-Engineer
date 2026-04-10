@@ -109,21 +109,37 @@
         ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
 
 - Evidently AI for evaluation data drifting
-    - Evidently for LLMs evaluation
-
-    - Evidently for ML Models monitoring
-
-    - Evidently for data evaluation
-
-    - Logs of running each .py in evidently
-        """
-        python3 run_audit.py
-        python3 run_audit.py --audit model
-        python3 run_audit.py --audit data
-        python3 run_audit.py --audit LLM
-        """
-
+    - LLMs datasets report as evaluation dataset which is deployed on Evidently Cloud -> the column name on Question, Context, Answer, Sentiment, Length, Denials, Denials Reasoning is evidently integration
+    ![alt text](Database/images/27F7D1D4-2B04-48F1-B400-5EA9A4803FE4_1_201_a.jpeg)
+    ![alt text](Database/images/676F2679-FC79-43BE-8409-2D61406634D2.png)
+    
+    - Dashboard reports
+    Rowcount dashboard
+    ![alt text](Database/images/256D1689-BA4C-454C-BF79-4F533605438B.png)
+    
 - Deploy on EvidentlyAI Cloud
+
+- Kubeflow pipelines deployment
+    - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
+    ![alt text](Database/images/A24DE502-D999-4B8B-BCE6-37AF29888914.png)
+    - Models deploy on kubeflow
+
+    - Data pipelines merged
+
+    - LLMs finetuning
+
+
+
+def train_model(input_data: str, model_dir: str = 'tmp/models') -> str:
+    import pandas as pd
+    import pickle
+    from sklearn.ensemble impor
+
+    df = pd.read_csv(input_data)
+    X = df.iloc[:, :-1]
+    y = df.iloc[:, -1]
+
+    model = 
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
