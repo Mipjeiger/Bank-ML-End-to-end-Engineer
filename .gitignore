@@ -5,3 +5,7 @@
 ml-engineer/mlflow/mlruns
 deleting_caches.md
 AI-engineer/tes.py
+ml-engineer/kubeflow/pipelines/banking_pipeline.yaml
+banking_pipeline.yaml
+ml-engineer/kubeflow/kubeflow-pipelines.tar.gz
+ml-engineer/kubeflow/pipelines-2.2.0

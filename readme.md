@@ -109,19 +109,25 @@
         ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
 
 - Evidently AI for evaluation data drifting
-    - LLMs datasets report as evaluation dataset which is deployed on Evidently Cloud -> the column name on Question, Context, Answer, Sentiment, Length, Denials, Denials Reasoning is evidently integration
-    ![alt text](Database/images/27F7D1D4-2B04-48F1-B400-5EA9A4803FE4_1_201_a.jpeg)
-    ![alt text](Database/images/676F2679-FC79-43BE-8409-2D61406634D2.png)
-    
-    - Dashboard reports
-    Rowcount dashboard
-    ![alt text](Database/images/256D1689-BA4C-454C-BF79-4F533605438B.png)
+    - Dataset summary of LLMs Evaluation
+    ![alt text](Database/images/F644BE69-A0C4-4106-9EA6-4A18925138BC.png) 
+    - Answer length and word count of LLMs evaluation
+    ![alt text](Database/images/2B87ADD8-E294-40AF-B35B-1A8D00022A7C.png)
+    - Contains number & Uncertain sentence to prevent the hallucinates text
+    ![alt text](Database/images/08172A16-B2BD-46E9-8DD0-9198E7254B89.png)
+    - Contains percentage & fraud mentions on LLMs sentences
+    ![alt text](Database/images/95B0D563-60AE-42A9-9007-8D86B4C3ACDF.png)
+    - Mentions churn & numeric density based on data-driven (statistically assumption)
+    ![alt text](Database/images/872478B3-1515-47CE-8F38-00F558FB119F.png)
     
 - Deploy on EvidentlyAI Cloud
 
 - Kubeflow pipelines deployment
     - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
     ![alt text](Database/images/A24DE502-D999-4B8B-BCE6-37AF29888914.png)
+    - Minikube cluster info
+    ![alt text](Database/images/69AD4D4D-C994-4006-9B57-A4DF15D2EB4F.png)
+
     - Models deploy on kubeflow
 
     - Data pipelines merged

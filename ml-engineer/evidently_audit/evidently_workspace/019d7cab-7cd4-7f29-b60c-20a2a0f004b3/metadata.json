@@ -1,0 +1,7 @@
+{
+  "id": "019d7cab-7cd4-7f29-b60c-20a2a0f004b3",
+  "name": "LLM Audit",
+  "description": "Project for auditing LLM performance on models, data, and LLMs evaluations.",
+  "org_id": null,
+  "version": "2"
+}
