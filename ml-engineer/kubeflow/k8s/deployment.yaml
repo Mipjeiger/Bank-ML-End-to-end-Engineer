@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-pipeline-runner
+  namespace: kubeflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-pipeline
+  template:
+    metadata:
+      labels:
+        app: banking-pipeline
+    spec:
+      serviceAccountName: pipeline-runner
+      containers:
+      - name: pipeline
+        image: banking-pipeline:latest
+        env:
+        - name: KUBEFLOW_HOST
+          value: "http://kubeflow:80"
+        volumeMounts:
+        - name: data-storage
+          mountPath: /mnt/data
+        - name: models-storage
+          mountPath: /mnt/models
+        envFrom:
+        - configMapRef:
+            name: banking-pipeline-config
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: banking-data-pvc
+      - name: models-storage
+        persistentVolumeClaim:
+          claimName: banking-models-pvc

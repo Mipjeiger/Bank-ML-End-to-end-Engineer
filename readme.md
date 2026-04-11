@@ -128,19 +128,6 @@
 
     - LLMs finetuning
 
-
-
-def train_model(input_data: str, model_dir: str = 'tmp/models') -> str:
-    import pandas as pd
-    import pickle
-    from sklearn.ensemble impor
-
-    df = pd.read_csv(input_data)
-    X = df.iloc[:, :-1]
-    y = df.iloc[:, -1]
-
-    model = 
-
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
 

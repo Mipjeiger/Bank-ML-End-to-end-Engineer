@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: banking-pipeline-config
+  namespace: kubeflow
+data:
+  DATA_PATH: "Database/data/eda_banking.csv.gz"
+  MODELS_DIR: "/mnt/models/banking_models"
+  OUTPUT_PATH: "/mnt/models/output"
+  PREPROCESSING_OUTPUT: "/mnt/data/preprocessed"
+  EVALUATION_METRICS: "/mnt/data/metrics"
+  PYTHON_VERSION: "3.11"
+  PACKAGES: "pandas,scikit-learn,xgboost"

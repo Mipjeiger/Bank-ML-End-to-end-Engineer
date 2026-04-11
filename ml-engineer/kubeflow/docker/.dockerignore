@@ -1,0 +1,47 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.venv
+venv
+env
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+
+# Data files (large)
+*.csv
+*.csv.gz
+*.pickle
+*.pkl
+*.parquet
+
+# Notebooks
+*.ipynb
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+.env
+.env.local
+
+# Kubeflow
+*.yaml
+*.yml
+k8s/
+pipelines/
+
+# Unnecessary
+tests/
+docs/
+README.md
