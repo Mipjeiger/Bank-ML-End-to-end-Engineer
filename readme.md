@@ -108,7 +108,7 @@
         - Models metrics 3rd pic
         ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
 
-- Evidently AI for evaluation data drifting
+- Evidently AI for evaluation data drifting -> - Deploy on EvidentlyAI Cloud
     - Dataset summary of LLMs Evaluation
     ![alt text](Database/images/F644BE69-A0C4-4106-9EA6-4A18925138BC.png) 
     - Answer length and word count of LLMs evaluation
@@ -119,8 +119,8 @@
     ![alt text](Database/images/95B0D563-60AE-42A9-9007-8D86B4C3ACDF.png)
     - Mentions churn & numeric density based on data-driven (statistically assumption)
     ![alt text](Database/images/872478B3-1515-47CE-8F38-00F558FB119F.png)
-    
-- Deploy on EvidentlyAI Cloud
+    - Sentiment for answer & text length on sentences traffic
+    ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
 - Kubeflow pipelines deployment
     - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
@@ -134,14 +134,18 @@
 
     - LLMs finetuning
 
+- Seldom core for tracking data pipelines (connected with data 1 - data 2 - data(n))
+    -
+
+- CI/CD pipelines for automation comprehensive
+
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
 
     - Slack getting disadvantage notifications
 
-- CI/CD pipelines for automation comprehensive
-
 - Deploy models on cloud (Optional: Try deploy on railway)
+
 
 - Deploy LLMs gradio on Huggingface
 

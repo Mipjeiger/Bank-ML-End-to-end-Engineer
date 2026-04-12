@@ -1,10 +1,14 @@
 from kfp import dsl
+from kfp.dsl import Output, Model, Metrics
 
-@dsl.component(base_image="python:3.11", 
-               packages_to_install=["scikit-learn", "xgboost"])
+@dsl.component(
+    base_image="python:3.11",
+    packages_to_install=["pandas", "scikit-learn", "xgboost"]
+)
 def train_model(
     preprocessed_data_path: str,
-    model_output_path: str
+    model: Output[Model],
+    metrics: Output[Metrics]
 ):
     import pandas as pd
     import pickle
@@ -14,43 +18,66 @@ def train_model(
     from sklearn.linear_model import LogisticRegression
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.model_selection import train_test_split, GridSearchCV
+    from sklearn.metrics import f1_score
 
-    # Load preprocessed data
     df = pd.read_csv(preprocessed_data_path)
     X = df.iloc[:, :-1]
     y = df.iloc[:, -1]
 
-    # Split the data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
 
-    # Train all models
-    model = {
-    "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000, class_weight='balanced'),
-    "Decision Tree":       DecisionTreeClassifier(random_state=42, class_weight='balanced'),
-    "Random Forest":       RandomForestClassifier(random_state=42, class_weight='balanced', n_jobs=-1),
-    "XGBoost":             XGBClassifier(random_state=42, eval_metric='logloss', verbosity=0, scale_pos_weight=3),
-    "KNN":                 KNeighborsClassifier()
-}
-    
-    # Hyperparameters for GridSearchCV
+    models = {
+        "Logistic Regression": LogisticRegression(max_iter=1000, class_weight='balanced'),
+        "Decision Tree": DecisionTreeClassifier(class_weight='balanced'),
+        "Random Forest": RandomForestClassifier(class_weight='balanced', n_jobs=-1),
+        "XGBoost": XGBClassifier(eval_metric='logloss', verbosity=0, scale_pos_weight=3),
+        "KNN": KNeighborsClassifier()
+    }
+
     param_grid = {
-    "Logistic Regression": {"C": [0.001, 0.01, 0.1, 1, 10], "penalty": ["l2"], "solver": ["lbfgs"]},
-    "Decision Tree":       {"max_depth": [5, 10, 15, 20], "min_samples_split": [5, 10, 20], "min_samples_leaf": [2, 4, 8]},
-    "Random Forest":       {"n_estimators": [100, 200, 300], "max_depth": [5, 10, 15], "min_samples_split": [5, 10], "min_samples_leaf": [2, 4]},
-    "XGBoost":             {"n_estimators": [100, 200], "max_depth": [3, 5, 7], "learning_rate": [0.01, 0.05, 0.1], "subsample": [0.7, 0.8, 1.0]},
-    "KNN":                 {"n_neighbors": [3, 5, 7, 9], "weights": ["uniform", "distance"]}
-}
-    
-    # Train all models with GridSearchCV
-    best_models = {}
-    for name, clf in model.items():
-        print(f"Training {name}...")
-        grid_search = GridSearchCV(estimator=clf, param_grid=param_grid[name], cv=5, scoring='f1_weighted', n_jobs=-1)
-        grid_search.fit(X_train, y_train)
-        best_models[name] = grid_search.best_estimator_
-        print(f"Best parameters for {name}: {grid_search.best_params_}")
+        "Logistic Regression": {"C": [0.1, 1]},
+        "Decision Tree": {"max_depth": [5, 10]},
+        "Random Forest": {"n_estimators": [100, 200]},
+        "XGBoost": {"n_estimators": [100], "max_depth": [3, 5]},
+        "KNN": {"n_neighbors": [3, 5]}
+    }
 
-    # Save all models to the specified output path
-    with open(model_output_path, 'wb') as f:
-        pickle.dump(best_models, f)
-    print(f"Models saved to {model_output_path}")
+    best_model = None
+    best_score = -1
+    best_name = ""
+
+    for name, clf in models.items():
+        print(f"Training {name}...")
+
+        grid = GridSearchCV(
+            clf,
+            param_grid[name],
+            cv=3,
+            scoring='f1_weighted',
+            n_jobs=-1
+        )
+        grid.fit(X_train, y_train)
+
+        preds = grid.best_estimator_.predict(X_val)
+        score = f1_score(y_val, preds, average='weighted')
+
+        print(f"{name} F1: {score:.4f}")
+
+        # 🔥 log to Kubeflow UI
+        metrics.log_metric(name, float(score))
+
+        if score > best_score:
+            best_score = score
+            best_model = grid.best_estimator_
+            best_name = name
+
+    print(f"Best model: {best_name} ({best_score:.4f})")
+
+    # 🔥 log best model info
+    metrics.log_metric("best_f1_score", float(best_score))
+
+    # save ONLY best model (important)
+    with open(model.path, "wb") as f:
+        pickle.dump(best_model, f)
