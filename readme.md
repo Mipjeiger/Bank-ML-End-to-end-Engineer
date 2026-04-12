@@ -134,8 +134,10 @@
 
     - LLMs finetuning
 
-- Seldom core for tracking data pipelines (connected with data 1 - data 2 - data(n))
-    -
+- Seldom core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments.
+    - real-time ML models or LLM deployments -> with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+
+    - Data science monitoring
 
 - CI/CD pipelines for automation comprehensive
 

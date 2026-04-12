@@ -1,0 +1,87 @@
+# =========================
+# Git
+# =========================
+.git
+.gitignore
+
+# =========================
+# Python cache
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.so
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.env/
+.envrc
+.venv/
+
+# =========================
+# Jupyter / notebooks
+# =========================
+*.ipynb
+.ipynb_checkpoints/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+*.out
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Large datasets (IMPORTANT)
+# =========================
+data/
+datasets/
+*.csv
+*.parquet
+*.xlsx
+
+# =========================
+# Training artifacts (optional)
+# =========================
+mlruns/
+wandb/
+checkpoints/
+outputs/
+
+# =========================
+# Tests
+# =========================
+tests/
+pytest_cache/
+
+# =========================
+# Docker-related (avoid nesting)
+# =========================
+docker-compose.yml
+
+# =========================
+# Model files (CONTROL THIS CAREFULLY)
+# =========================
+# By default ignore all models
+models/*
+# But allow only required models (uncomment if needed)
+!models/*.pkl
+
+# =========================
+# Secrets / credentials
+# =========================
+*.env
+*.key
+*.pem
+*.crt
+secrets/

@@ -1,0 +1,18 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: marketing-model
+spec:
+  predictors:
+  - name: default
+    replicas: 1
+    graph:
+      name: marketing-model
+      implementation: UNKNOWN
+      endpoint:
+        type: REST
+    componentSpecs:
+    - spec:
+        containers:
+        - name: marketing-model
+          image: mipjeiger/marketing-model:latest

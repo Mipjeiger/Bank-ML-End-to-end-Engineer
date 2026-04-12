@@ -1,0 +1,18 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: fraud-model
+spec:
+  predictors:
+  - name: default
+    replicas: 1
+    graph:
+      name: fraud-model
+      implementation: UNKNOWN
+      endpoint:
+        type: REST
+    componentSpecs:
+    - spec:
+        containers:
+        - name: fraud-model
+          image: mipjeiger/fraud-model:latest

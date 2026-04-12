@@ -1,0 +1,18 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: operational-model
+spec:
+  predictors:
+  - name: default
+    replicas: 1
+    graph:
+      name: operational-model
+      implementation: UNKNOWN
+      endpoint:
+        type: REST
+    componentSpecs:
+    - spec:
+        containers:
+        - name: operational-model
+          image: mipjeiger/operational-model:latest
