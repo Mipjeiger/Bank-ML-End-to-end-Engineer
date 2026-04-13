@@ -137,6 +137,9 @@
     - LLMs finetuning
 
 - Seldom core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+    - Deploy models on dockerhub repository based on seldon core progress
+    ![alt text](Database/images/B00514A5-54CB-40E1-8D6D-AD999050C296.png)
+
     - Real-time ML models or LLM deployments
 
     - Data science monitoring
