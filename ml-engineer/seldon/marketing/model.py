@@ -5,6 +5,7 @@ import os
 class MarketingModel:
     def __init__(self):
         self.models = {}
+        self.load()
 
     def load(self):
         base_path = "/models"
