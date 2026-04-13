@@ -4,15 +4,14 @@ metadata:
   name: banking-llm
 spec:
   predictors:
-  - name: default
-    replicas: 1
-    graph:
-      name: banking-llm
-      implementation: UNKNOWN
-      endpoint:
-        type: REST
-    componentSpecs:
-    - spec:
-        containers:
-        - name: banking-llm
-          image: your-dockerhub/banking-llm:latest
+    - name: default
+      replicas: 1
+      graph:
+        name: banking-llm
+        children: []
+      componentSpecs:
+        - spec:
+            containers:
+              - name: banking-llm
+                image: mipjeiger/banking-llm:latest
+                imagePullPolicy: Always

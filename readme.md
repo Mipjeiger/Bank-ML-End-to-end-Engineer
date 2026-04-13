@@ -123,6 +123,12 @@
     ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
 - PostgreSQL for data analysis integration with bank system
+    - SQL code cheatseet for data analyzing
+    ![alt text](Database/images/5805ABB6-F3BB-43AE-9E7E-74E95AA13BC3.png)
+    - Fraud analysis which are integrating with RiskScore, Balance column name count by labels (0: non fraud, 1: fraud)
+    ![alt text](Database/images/ACEE3FCC-688E-4A82-A68B-3CB9CF348AB4.png)
+    - Amount of banking products based on NumOfProducts column name -> Counted toward to avg of balance columnname, Sum of exited columnname, avg of HasCrCard columnname 
+    ![alt text](Database/images/56CE1C2B-CFD4-40AB-BEE2-37D46372BB6B.png)
 
 - Kubeflow pipelines deployment
     - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
@@ -136,9 +142,17 @@
 
     - LLMs finetuning
 
-- Seldom core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+- Seldon core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
     - Deploy models on dockerhub repository based on seldon core progress
     ![alt text](Database/images/B00514A5-54CB-40E1-8D6D-AD999050C296.png)
+
+    - Create seldon-system core by kubernetes on docker dekstop
+    ![alt text](Database/images/FCBB7E04-1D09-43E1-85DD-4701CAC4F814.png)
+
+    - 1.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
+    ![alt text](Database/images/01C56821-6803-43CF-BD5B-187DD3DEAFE5.png)
+      2. Debugging on one of the kubernetes pods on seldon-system
+    ![alt text](Database/images/9B2E8BA1-A001-4B8D-AE77-94FB63B1F702.png) 
 
     - Real-time ML models or LLM deployments
 
