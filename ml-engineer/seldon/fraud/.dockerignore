@@ -73,9 +73,6 @@ docker-compose.yml
 # Model files (CONTROL THIS CAREFULLY)
 # =========================
 # By default ignore all models
-models/*
-# But allow only required models (uncomment if needed)
-!models/*.pkl
 
 # =========================
 # Secrets / credentials

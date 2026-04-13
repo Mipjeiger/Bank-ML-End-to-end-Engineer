@@ -122,6 +122,8 @@
     - Sentiment for answer & text length on sentences traffic
     ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
+- PostgreSQL for data analysis integration with bank system
+
 - Kubeflow pipelines deployment
     - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
     ![alt text](Database/images/A24DE502-D999-4B8B-BCE6-37AF29888914.png)
@@ -134,12 +136,12 @@
 
     - LLMs finetuning
 
-- Seldom core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments.
-    - real-time ML models or LLM deployments -> with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+- Seldom core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+    - Real-time ML models or LLM deployments
 
     - Data science monitoring
 
-- CI/CD pipelines for automation comprehensive
+- CI/CD pipelines for automation ML banking system
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
