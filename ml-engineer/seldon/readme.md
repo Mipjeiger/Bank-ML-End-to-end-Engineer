@@ -19,6 +19,10 @@ docker push mipjeiger/marketing-model:latest
 docker push mipjeiger/operational-model:latest
 docker push mipjeiger/banking-llm:latest
 
+🐳 5. PULL (pull seldon-core) as runner since we have 
+seldonio/seldon-core-operator:1.17.0 as operator
+docker pull seldonio/seldon-core-executor:1.19.0
+
 🚀 6. DEPLOY TO KUBERNETES (CORRECT PATHS)
 Run from Bank-Project root:
 kubectl apply -f ml-engineer/seldon/fraud/seldon.yaml

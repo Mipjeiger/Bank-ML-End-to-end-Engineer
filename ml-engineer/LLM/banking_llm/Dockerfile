@@ -6,7 +6,10 @@ COPY ml-engineer/LLM/banking_llm/app.py /app/
 COPY ml-engineer/LLM/banking_llm/prompt_engine.py /app/ 
 COPY ml-engineer/LLM/banking_llm/requirements.txt /app/
 
-RUN pip install --no-cache-dir -r requirements.txt && \
+# CPU-only torch
+
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir -r requirements.txt && \
     rm -rf /root/.cache/pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
