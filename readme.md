@@ -143,12 +143,18 @@
 
         - LLMs finetuning
 
-    - Seldon core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+    - Seldon Core implementation on banking-finance sectors
+    1. Automated Fraud Detection: Bank is helped using seldon's inference graphs to chain models for detecting frauds.
+    2. Regulatory Compliance: Integration provides within "Explainable AI" which is critical for meeting on GDPR financial regulations.
+    3. Real-time Prediction: The banking application sends transaction data to the seldon endpoint and receives a score/decision in milliseconds.
         - Deploy models on dockerhub repository based on seldon core progress
         ![alt text](Database/images/B00514A5-54CB-40E1-8D6D-AD999050C296.png)
 
         - Create seldon-system core by kubernetes on docker dekstop
         ![alt text](Database/images/FCBB7E04-1D09-43E1-85DD-4701CAC4F814.png)
+
+        - Seldon Core is deployed with namespace seldon-system
+        ![alt text](Database/images/13FB4E0C-297D-434A-BEEC-2240567E0077.png)
 
         - 1.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
         ![alt text](Database/images/01C56821-6803-43CF-BD5B-187DD3DEAFE5.png)

@@ -30,6 +30,14 @@ kubectl apply -f ml-engineer/seldon/marketing/seldon.yaml
 kubectl apply -f ml-engineer/seldon/operational/seldon.yaml
 kubectl apply -f llm/banking_llm/seldon.yaml
 
+* Restart deployment
+kubectl delete -f ml-engineer/seldon/fraud/seldon.yaml
+kubectl apply -f ml-engineer/seldon/fraud/seldon.yaml
+
+* Check logs
+kubectl logs -f <fraud-pod-name>
+
+
 🔍 7. VERIFY (must do)
 kubectl get pods
 If something fails:

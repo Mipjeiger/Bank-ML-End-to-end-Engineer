@@ -13,6 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PYTHONPATH=/app
+# Set PYTHONPATH to /app so model.py can be found    
+ENV PYTHONPATH=/app 
 
-CMD ["seldon-core-microservice", "model", "FraudModel", "--service-type", "MODEL"]
+# Explicity define the model Name and Service Type
+ENV MODEL_NAME=FraudModel
+ENV SERVICE_TYPE=MODEL
+
+CMD ["seldon-core-microservice", "model", "FraudModel"]

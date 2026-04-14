@@ -8,6 +8,7 @@ spec:
       replicas: 1
       graph:
         name: fraud-model
+        type: MODEL
         children: []          
       componentSpecs:
         - spec:
@@ -15,3 +16,15 @@ spec:
               - name: fraud-model
                 image: mipjeiger/fraud-model:latest
                 imagePullPolicy: IfNotPresent
+                env:
+                  - name: MODEL_NAME
+                    value: FraudModel
+                  - name: SERVICE_TYPE
+                    value: MODEL
+                resources:
+                  requests:
+                    cpu: "0.5"
+                    memory: "512Mi"
+                  limits:
+                    cpu: "1"
+                    memory: "1Gi"
