@@ -8,10 +8,10 @@ spec:
       replicas: 1
       graph:
         name: fraud-model
-        children: []          # ← required for custom containers
+        children: []          
       componentSpecs:
         - spec:
             containers:
               - name: fraud-model
                 image: mipjeiger/fraud-model:latest
-                imagePullPolicy: Always
+                imagePullPolicy: IfNotPresent

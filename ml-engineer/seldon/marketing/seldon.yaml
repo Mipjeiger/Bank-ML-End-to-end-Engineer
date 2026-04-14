@@ -14,4 +14,4 @@ spec:
             containers:
               - name: marketing-model
                 image: mipjeiger/marketing-model:latest
-                imagePullPolicy: Always
+                imagePullPolicy: IfNotPresent

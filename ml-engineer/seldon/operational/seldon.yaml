@@ -14,4 +14,4 @@ spec:
             containers:
               - name: operational-model
                 image: mipjeiger/operational-model:latest
-                imagePullPolicy: Always
+                imagePullPolicy: IfNotPresent
