@@ -130,33 +130,39 @@
     - Amount of banking products based on NumOfProducts column name -> Counted toward to avg of balance columnname, Sum of exited columnname, avg of HasCrCard columnname 
     ![alt text](Database/images/56CE1C2B-CFD4-40AB-BEE2-37D46372BB6B.png)
 
-- Kubeflow pipelines deployment
-    - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
-    ![alt text](Database/images/A24DE502-D999-4B8B-BCE6-37AF29888914.png)
-    - Minikube cluster info
-    ![alt text](Database/images/69AD4D4D-C994-4006-9B57-A4DF15D2EB4F.png)
+- Model Deployment and Serving Tools
+    - Kubeflow pipelines deployment
+        - Kubeflow architecture pipeline design (sources: https://www.kubeflow.org/docs/started/architecture/)
+        ![alt text](Database/images/A24DE502-D999-4B8B-BCE6-37AF29888914.png)
+        - Minikube cluster info
+        ![alt text](Database/images/69AD4D4D-C994-4006-9B57-A4DF15D2EB4F.png)
 
-    - Models deploy on kubeflow
+        - Models deploy on kubeflow
 
-    - Data pipelines merged
+        - Data pipelines merged
 
-    - LLMs finetuning
+        - LLMs finetuning
 
-- Seldon core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
-    - Deploy models on dockerhub repository based on seldon core progress
-    ![alt text](Database/images/B00514A5-54CB-40E1-8D6D-AD999050C296.png)
+    - Seldon core for real-time monitoring, analysis, and performance tracking of ML systems, models, and deployment environments, with goals to get decision making to ensure teams have the key metrics for maintenance and decision-making
+        - Deploy models on dockerhub repository based on seldon core progress
+        ![alt text](Database/images/B00514A5-54CB-40E1-8D6D-AD999050C296.png)
 
-    - Create seldon-system core by kubernetes on docker dekstop
-    ![alt text](Database/images/FCBB7E04-1D09-43E1-85DD-4701CAC4F814.png)
+        - Create seldon-system core by kubernetes on docker dekstop
+        ![alt text](Database/images/FCBB7E04-1D09-43E1-85DD-4701CAC4F814.png)
 
-    - 1.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
-    ![alt text](Database/images/01C56821-6803-43CF-BD5B-187DD3DEAFE5.png)
-      2. Debugging on one of the kubernetes pods on seldon-system
-    ![alt text](Database/images/9B2E8BA1-A001-4B8D-AE77-94FB63B1F702.png) 
+        - 1.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
+        ![alt text](Database/images/01C56821-6803-43CF-BD5B-187DD3DEAFE5.png)
+        2. Debugging on one of the kubernetes pods on seldon-system
+        ![alt text](Database/images/9B2E8BA1-A001-4B8D-AE77-94FB63B1F702.png) 
 
-    - Real-time ML models or LLM deployments
+    - Deepchecks ML Models Testing -> testing models on deployment
 
-    - Data science monitoring
+- Data and Pipeline Versioning Tools
+    - Data Version Control (DVC) -> Data Version Control is an open-source and popular tool for machine learning projects. It works seamlessly with Git to provide you with code, data, model, metadata, and pipeline versioning. 
+        - 
+
+- Orchestration and Workflow Pipelines MLOps Tools
+    - Prefect -> data stack for monitoring, coordinating, and orchestrating workflows between and across applications.
 
 - CI/CD pipelines for automation ML banking system
 
