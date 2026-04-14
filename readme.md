@@ -156,10 +156,17 @@
         - Seldon Core is deployed with namespace seldon-system
         ![alt text](Database/images/13FB4E0C-297D-434A-BEEC-2240567E0077.png)
 
-        - 1.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
+        - 1. Docker container which are integrating kubernetes optimization
+        ![alt text](Database/images/B3CA9D35-F702-4BD1-AC3A-F867EF66120D.png)
+        - 2.  Kubernetes pods deployment seldon.yaml for LLM, marketing, fraud, operational models
         ![alt text](Database/images/01C56821-6803-43CF-BD5B-187DD3DEAFE5.png)
-        2. Debugging on one of the kubernetes pods on seldon-system
+        - 3. Debugging on one of the kubernetes pods on seldon-system
         ![alt text](Database/images/9B2E8BA1-A001-4B8D-AE77-94FB63B1F702.png) 
+        - 4. Dashboard showing UI workload status which are included Deployments, Pods, and replica sets integration.
+        Still debugging these models deployment which aren't compatible between docker system with API integrates
+        ![alt text](Database/images/2EF0697B-9EA1-41EC-82DB-1DD12288F418.png)
+        - 5. Banking-project (Fraud, Marketing, and Operational) models deployment in kubernetes dashboard UI service
+        ![alt text](Database/images/45EC818F-5DCF-4080-9450-2CA2E37A4E6F.png)
 
     - Deepchecks ML Models Testing -> testing models on deployment
 

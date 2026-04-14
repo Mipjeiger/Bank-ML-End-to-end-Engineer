@@ -3,11 +3,14 @@ kind: SeldonDeployment
 metadata:
   name: operational-model
 spec:
+  annotations:
+    seldon.io/executor-image: "seldonio/seldon-core-executor:1.18.0"
   predictors:
     - name: default
       replicas: 1
       graph:
         name: operational-model
+        type: MODEL
         children: []
       componentSpecs:
         - spec:
@@ -15,3 +18,15 @@ spec:
               - name: operational-model
                 image: mipjeiger/operational-model:latest
                 imagePullPolicy: IfNotPresent
+                env:
+                  - name: MODEL_NAME
+                    value: OperationalModel
+                  - name: SERVICE_TYPE
+                    value: MODEL
+                resources:
+                  requests:
+                    cpu: "0.5"
+                    memory: "512Mi"
+                  limits:
+                    cpu: "1"
+                    memory: "1Gi"

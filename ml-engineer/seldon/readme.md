@@ -37,6 +37,17 @@ kubectl apply -f ml-engineer/seldon/fraud/seldon.yaml
 * Check logs
 kubectl logs -f <fraud-pod-name>
 
+* Important Notes
+🚀 Execution Plan
+
+1. Build: docker build -t mipjeiger/fraud-model:latest .
+
+2. Push: docker push mipjeiger/fraud-model:latest (Don't forget this! If you don't push, Kubernetes will keep using the old, broken image).
+
+3. Apply: kubectl apply -f seldon.yaml
+
+4. Watch: kubectl get pods -w
+
 
 🔍 7. VERIFY (must do)
 kubectl get pods

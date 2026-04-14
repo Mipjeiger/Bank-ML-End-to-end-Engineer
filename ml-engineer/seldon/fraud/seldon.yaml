@@ -3,6 +3,8 @@ kind: SeldonDeployment
 metadata:
   name: fraud-model
 spec:
+  annotations:
+    seldon.io/executor-image: "seldonio/seldon-core-executor:1.18.0"
   predictors:
     - name: default
       replicas: 1
