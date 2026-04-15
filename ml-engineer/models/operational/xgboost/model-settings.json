@@ -1,0 +1,4 @@
+{
+  "name": "operational-xgboost",
+  "implementation": "mlserver_xgboost.XGBoostModel"
+}

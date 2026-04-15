@@ -1,0 +1,4 @@
+{
+  "name": "marketing-decision_tree",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

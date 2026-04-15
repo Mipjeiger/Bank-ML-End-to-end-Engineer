@@ -1,0 +1,4 @@
+{
+  "name": "operational-decision_tree",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

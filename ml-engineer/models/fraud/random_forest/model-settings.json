@@ -1,0 +1,4 @@
+{
+  "name": "fraud-random_forest",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

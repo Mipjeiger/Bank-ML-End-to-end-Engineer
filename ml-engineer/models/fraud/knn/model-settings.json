@@ -1,0 +1,4 @@
+{
+  "name": "fraud-knn",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

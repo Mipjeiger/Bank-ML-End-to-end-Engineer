@@ -1,0 +1,4 @@
+{
+  "name": "fraud-xgboost",
+  "implementation": "mlserver_xgboost.XGBoostModel"
+}

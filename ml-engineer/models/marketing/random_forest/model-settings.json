@@ -1,0 +1,4 @@
+{
+  "name": "marketing-random_forest",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

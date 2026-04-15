@@ -1,0 +1,4 @@
+{
+  "name": "operational-random_forest",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

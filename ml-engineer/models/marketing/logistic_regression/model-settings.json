@@ -1,0 +1,4 @@
+{
+  "name": "marketing-logistic_regression",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

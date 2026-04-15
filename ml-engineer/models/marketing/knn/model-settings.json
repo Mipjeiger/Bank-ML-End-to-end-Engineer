@@ -1,0 +1,4 @@
+{
+  "name": "marketing-knn",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

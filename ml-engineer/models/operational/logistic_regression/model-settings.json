@@ -1,0 +1,4 @@
+{
+  "name": "operational-logistic_regression",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}

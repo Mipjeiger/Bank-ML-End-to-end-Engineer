@@ -1,0 +1,4 @@
+{
+  "name": "marketing-xgboost",
+  "implementation": "mlserver_xgboost.XGBoostModel"
+}

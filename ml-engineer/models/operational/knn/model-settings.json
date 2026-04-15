@@ -1,0 +1,4 @@
+{
+  "name": "operational-knn",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}
