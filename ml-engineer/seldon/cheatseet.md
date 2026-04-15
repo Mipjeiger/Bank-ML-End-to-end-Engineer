@@ -1,126 +1,139 @@
-🚀 🔹 KUBECTL CHEATSHEET (daily use)
+🚀 🔥 END-TO-END CHEATSHEET (STEP BY STEP)
 
-📦 Cluster & context
+🧩 0. Check cluster ready
 kubectl cluster-info
-kubectl config get-contexts
-kubectl config use-context docker-desktop
+kubectl get nodes
 
-📋 Get resources
-kubectl get pods
+📦 1. Helm setup (Seldon Core)
+✅ Check repo
+helm repo list
+You already have:
+seldon
+seldonio (duplicate but OK)
+✅ Update repo
+helm repo update
+✅ Install Seldon Core
+helm install seldon-core seldon/seldon-core-operator \
+  --namespace seldon-system \
+  --create-namespace \
+  --set usageMetrics.enabled=false \
+  --set istio.enabled=false \
+  --set image.tag=1.17.0
+
+--> output helm should be 
+NAME: seldon-core
+LAST DEPLOYED: Wed Apr 15 19:30:04 2026
+NAMESPACE: seldon-system
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+
+✅ Verify installation
+helm list -n seldon-system
+kubectl get pods -n seldon-system
+You should see:
+seldon-controller-manager → Running ✅
+
+🧠 2. (IMPORTANT) Build & Push Docker Images
+⚠️ This is where your current error is (ImagePullBackOff)
+✅ Build images
+docker build -t <dockerhub-username>/fraud-model:latest -f ml-engineer/seldon/fraud/Dockerfile .
+docker build -t <dockerhub-username>/marketing-model:latest -f ml-engineer/seldon/marketing/Dockerfile .
+docker build -t <dockerhub-username>/operational-model:latest -f ml-engineer/seldon/operational/Dockerfile .
+docker build -t <dockerhub-username>/banking-llm:latest -f ml-engineer/LLM/banking_llm/Dockerfile .
+✅ Login DockerHub
+docker login
+✅ Push images
+docker push <dockerhub-username>/fraud-model:latest
+docker push <dockerhub-username>/marketing-model:latest
+docker push <dockerhub-username>/operational-model:latest
+docker push <dockerhub-username>/banking-llm:latest
+
+🚀 3. Deploy Seldon Models
+kubectl apply -f ml-engineer/seldon/fraud/seldon.yaml
+kubectl apply -f ml-engineer/seldon/marketing/seldon.yaml
+kubectl apply -f ml-engineer/seldon/operational/seldon.yaml
+kubectl apply -f ml-engineer/LLM/banking_llm/seldon.yaml
+✅ Verify deployments
+kubectl get seldondeployments
+✅ Check pods
 kubectl get pods -A
-kubectl get pods -o wide
+Expected:
+STATUS → Running ✅ (NOT ImagePullBackOff)
 
-kubectl get svc
-kubectl get deployments
-kubectl get all -n default
-kubectl get seldondeployments -n default
-
-🔍 Debugging (VERY IMPORTANT 🔥)
+🔍 4. Debug (if something fails)
+🔥 Most important commands
 kubectl describe pod <pod-name>
 kubectl logs <pod-name>
-kubectl logs -f <pod-name>   # streaming
 kubectl get events --sort-by=.metadata.creationTimestamp
+❗ If you see:
+ImagePullBackOff ❌
+👉 Fix:
+wrong image name
+not pushed
+private repo (need secret)
 
-👉 For your case (ImagePullBackOff), ALWAYS:
-kubectl describe pod <pod>
-
-🧹 Delete / cleanup
-kubectl delete pod <pod-name>
-kubectl delete pods --all -n default
-
-kubectl delete deployment <name>
-kubectl delete deployment --all -n default
-kubectl delete seldondeployment --all -n default
-
-🚀 Apply / deploy
-kubectl apply -f deployment.yaml
-kubectl apply -f .
-kubectl delete -f deployment.yaml
-
-🔁 Restart / scale
-kubectl rollout restart deployment <name>
-
-kubectl scale deployment <name> --replicas=0
-kubectl scale deployment <name> --replicas=1
-
-🌐 Access services
-kubectl port-forward svc/<service-name> 8080:80
-kubectl proxy
-
-🔐 Dashboard token
+🌐 5. Kubernetes Dashboard
+✅ Get token
 kubectl -n kubernetes-dashboard create token admin-user
+✅ Run proxy
+kubectl proxy
+✅ Open UI
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+🔥 What to check in dashboard
+Pods → status
+Logs
+Events
+Seldon workloads
 
-📂 Exec into container
-kubectl exec -it <pod-name> -- /bin/sh
+🧹 6. Clean & redeploy (VERY COMMON LOOP)
+Delete all models
+kubectl delete seldondeployment --all -n default
+Or delete everything in default
+kubectl delete all --all -n default
+Redeploy
+kubectl apply -f ml-engineer/
 
-🚀 🔹 HELM CHEATSHEET
-Helm = package manager for Kubernetes
+🔁 7. Full Dev Loop (REAL WORKFLOW)
+# 1. Build
+docker build -t <user>/fraud-model:latest .
 
-📦 Release management
-helm list -A
-helm list -n seldon-system
+# 2. Push
+docker push <user>/fraud-model:latest
 
-➕ Install chart
-helm install seldon-core seldon-core-operator \
-  --repo https://storage.googleapis.com/seldon-charts \
-  -n seldon-system \
-  --create-namespace
+# 3. Deploy
+kubectl apply -f seldon.yaml
 
-🔄 Upgrade
-helm upgrade seldon-core seldon-core-operator \
-  -n seldon-system
+# 4. Check
+kubectl get pods
 
-❌ Uninstall
-helm uninstall seldon-core -n seldon-system
-
-🔍 Debug Helm
-helm status seldon-core -n seldon-system
-helm get values seldon-core -n seldon-system
-helm get manifest seldon-core -n seldon-system
-
-📥 Add repo
-helm repo add seldon https://storage.googleapis.com/seldon-charts
-helm repo update
-
-🔎 Search charts
-helm search repo seldon
-
-🔥 🔹 POWER USER ALIASES (HIGHLY RECOMMENDED)
-Add to your .zshrc / .bashrc:
+# 5. Debug
+kubectl describe pod <pod>
+kubectl logs <pod>
+⚡ 🔥 POWER ALIASES (SAVE TIME)
 alias k='kubectl'
-alias kgp='kubectl get pods'
-alias kga='kubectl get all'
+alias kgp='kubectl get pods -A'
+alias kgs='kubectl get seldondeployments'
 alias kdp='kubectl describe pod'
 alias klog='kubectl logs -f'
 alias kdel='kubectl delete'
-
 alias h='helm'
 alias hl='helm list -A'
 
-🧠 🔹 YOUR CURRENT DEBUG FLOW (IMPORTANT)
-Given your situation:
-ImagePullBackOff ❌
+🧠 🔥 KEY INSIGHT (IMPORTANT FOR YOU)
+Right now your bottleneck is NOT:
+Helm ❌
+Dashboard ❌
+Seldon ❌
 
-👉 Use this exact flow:
-kubectl get pods
-kubectl describe pod <pod>
-kubectl logs <pod>
-Then fix:
-Docker image name
-Tag
-Push to registry
+👉 It is:
+Docker image not accessible ❌
 
-🚀 🔹 BONUS (Seldon specific)
-kubectl get seldondeployments
-kubectl describe seldondeployment <name>
-
-🔥 TL;DR (most used commands)
-If you remember nothing else, remember this:
-kubectl get pods -A
-kubectl describe pod <pod>
-kubectl logs -f <pod>
-
-kubectl delete seldondeployment --all -n default
-
-helm list -A
-helm uninstall <release> -n <namespace>
+✅ SUCCESS CHECKLIST
+Before saying “done”, make sure:
+ helm list -n seldon-system → deployed
+ kubectl get pods -n seldon-system → Running
+ docker push success
+ kubectl get pods → Running (NOT ImagePullBackOff)
+ Dashboard shows green pods
