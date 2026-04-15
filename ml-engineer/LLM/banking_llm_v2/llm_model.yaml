@@ -1,0 +1,6 @@
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Model
+metadata:
+  name: banking-llm
+spec:
+  server: llm-server

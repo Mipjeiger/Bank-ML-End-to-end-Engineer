@@ -1,0 +1,13 @@
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Pipeline
+metadata:
+  name: marketing-pipeline
+spec:
+  steps:
+  - name: churn
+    model: marketing-churn
+  - name: xgb
+    model: marketing-xgb
+  - name: combine
+    container:
+      image: mipjeiger/marketing-combiner:latest

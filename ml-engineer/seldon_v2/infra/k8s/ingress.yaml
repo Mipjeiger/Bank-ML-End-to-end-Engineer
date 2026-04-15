@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: seldon-ingress
+  namespace: seldon-system-v2
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: seldon.local
+    http:
+      paths:
+      - path: /v2
+        pathType: Prefix
+        backend:
+          service:
+            name: seldon-gateway
+            port:
+              number: 80
+
+      - path: /llm
+        pathType: Prefix
+        backend:
+          service:
+            name: llm-server
+            port:
+              number: 8080

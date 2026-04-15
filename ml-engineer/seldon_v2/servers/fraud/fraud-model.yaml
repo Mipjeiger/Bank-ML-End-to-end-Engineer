@@ -1,9 +1,9 @@
 apiVersion: mlops.seldon.io/v1alpha1
 kind: Model
 metadata:
-  name: ops-model
+  name: fraud-model
 spec:
-  storageUri: "s3://mlops/ops/model/"
+  storageUri: "s3://mlops/fraud/model/"
   requirements:
   - sklearn
   server: sklearn-server

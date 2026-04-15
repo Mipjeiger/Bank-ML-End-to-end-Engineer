@@ -1,0 +1,39 @@
+# Seldon Core v2 helm Configuration
+global:
+  namespace: seldon-system-v2
+
+# Core components
+controller:
+  enabled: true
+
+agent:
+  enabled: true
+
+scheduler:
+  enabled: true
+
+modelgateway:
+  enabled: true
+
+gateway:
+  enabled: true
+  service:
+    type: ClusterIP
+    port: 80
+
+# MLSever runtime support
+servers:
+  mlservers:
+    enabled: true
+
+# Storage initializer
+storageInitializer:
+  enabled: true
+
+# Minio (S3-compatible config storage)
+env:
+  - name: AWS_ACCESS_KEY_ID
+    value: minioadmin
+  - name: AWS_SECRET_ACCESS_KEY
+    value: minioadmin
+  - name: AWS_ENDPOINT_URL

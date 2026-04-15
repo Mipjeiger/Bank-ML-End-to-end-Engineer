@@ -1,9 +1,9 @@
 apiVersion: mlops.seldon.io/v1alpha1
 kind: Model
 metadata:
-  name: fraud-xgb
+  name: marketing-xgb
 spec:
-  storageUri: "s3://mlops/fraud/xgboost/"
+  storageUri: "s3://mlops/marketing/xgboost/"
   requirements:
   - xgboost
   server: xgboost-server

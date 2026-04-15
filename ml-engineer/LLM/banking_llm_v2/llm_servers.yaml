@@ -1,0 +1,9 @@
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Server
+metadata:
+  name: llm-server
+spec:
+  replicas: 1
+  containers:
+  - name: llm
+    image: mipjeiger/banking-llm:latest

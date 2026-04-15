@@ -1,13 +1,13 @@
 apiVersion: mlops.seldon.io/v1alpha1
 kind: Pipeline
 metadata:
-  name: fraud-pipeline
+  name: ops-pipeline
 spec:
   steps:
   - name: model
-    model: fraud-model
+    model: ops-model
   - name: xgb
-    model: fraud-xgb
+    model: ops-xgb
   - name: combine
     container:
-      image: mipjeiger/fraud-combiner:latest
+      image: mipjeiger/ops-combiner:latest
