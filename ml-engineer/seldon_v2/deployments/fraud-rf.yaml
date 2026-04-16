@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-rf
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fraud-rf
+  template:
+    metadata:
+      labels:
+        app: fraud-rf
+    spec:
+      containers:
+      - name: mlserver
+        image: ghcr.io/seldonio/mlserver:1.5.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MLSERVER_MODEL_IMPLEMENTATION
+          value: mlserver_sklearn.SKLearnModel
+
+        - name: MLSERVER_MODEL_URI
+          value: s3://mlops/fraud/random_forest
+
+        - name: AWS_ACCESS_KEY_ID
+          value: admin123
+        - name: AWS_SECRET_ACCESS_KEY
+          value: supersecure123
+        - name: AWS_ENDPOINT_URL
+          value: http://minio.seldon-system-v2:9000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraud-rf
+  namespace: default
+spec:
+  selector:
+    app: fraud-rf
+  ports:
+    - port: 8080
+      targetPort: 8080

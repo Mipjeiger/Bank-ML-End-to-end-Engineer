@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: seldon-system
+
+resources:
+  # Servers
+  - server.yaml
+
+  # Fraud domain
+  - fraud/fraud-model.yaml
+  - fraud/fraud-xgb.yaml
+  - fraud/fraud-pipeline.yaml
+
+  # Marketing domain
+  - marketing/marketing-model.yaml
+  - marketing/marketing-xgb.yaml
+  - marketing/marketing-pipeline.yaml
+
+  # Operational domain
+  - operational/operational-model.yaml
+  - operational/operational-xgb.yaml
+  - operational/operational-pipeline.yaml
