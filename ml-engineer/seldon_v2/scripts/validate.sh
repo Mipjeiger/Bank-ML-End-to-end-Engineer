@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # validate.sh — run from Bank-Project/ml-engineer/seldon_v2/
-# Checks CRD presence, namespace, dry-run, and secret existence.
 set -euo pipefail
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
@@ -41,7 +40,7 @@ for CRD in servers.mlops.seldon.io models.mlops.seldon.io pipelines.mlops.seldon
   if kubectl get crd "$CRD" &>/dev/null; then
     ok "CRD '$CRD' registered"
   else
-    fail "CRD '$CRD' NOT found — apply mlops.seldon.io_servers.yaml first"
+    fail "CRD '$CRD' NOT found — apply the CRD yaml files first"
   fi
 done
 
@@ -54,7 +53,7 @@ else
   fail "Secret 'minio-credentials' missing — apply infra/k8s/secret.yaml first"
 fi
 
-# 5. Dry-run all server manifests
+# 5. Dry-run servers
 echo ""
 echo "── Dry-run: servers ──"
 if kubectl apply --dry-run=client -f servers/server.yaml &>/dev/null; then
@@ -63,7 +62,7 @@ else
   fail "servers/server.yaml — dry-run FAILED"
 fi
 
-# 6. Dry-run domain models + pipelines
+# 6. Dry-run models + pipelines
 echo ""
 echo "── Dry-run: models & pipelines ──"
 for DOMAIN in fraud marketing operational; do
@@ -76,20 +75,21 @@ for DOMAIN in fraud marketing operational; do
   done
 done
 
-# 7. kustomize build smoke test
+# 7. Kustomize build — use kubectl kustomize as fallback, never skip
 echo ""
 echo "── Kustomize build ──"
 if command -v kustomize &>/dev/null; then
-  if kustomize build servers/ &>/dev/null; then
-    ok "kustomize build servers/ succeeded"
-  else
-    fail "kustomize build servers/ FAILED"
-  fi
+  KUSTOMIZE_CMD="kustomize build"
 else
-  warn "kustomize not installed — skipping build check (kubectl kustomize also works)"
+  KUSTOMIZE_CMD="kubectl kustomize"
+fi
+if $KUSTOMIZE_CMD servers/ &>/dev/null; then
+  ok "kustomize build servers/ succeeded (via: $KUSTOMIZE_CMD)"
+else
+  fail "kustomize build servers/ FAILED (via: $KUSTOMIZE_CMD)"
 fi
 
-# 8. Image pull check (warns only — needs internet)
+# 8. Image check — manifest inspect only (no download), 10s timeout
 echo ""
 echo "── Image references ──"
 IMAGES=(
@@ -98,13 +98,17 @@ IMAGES=(
   "mipjeiger/marketing-combiner:latest"
   "mipjeiger/ops-combiner:latest"
 )
-for IMG in "${IMAGES[@]}"; do
-  if docker pull "$IMG" --quiet &>/dev/null 2>&1; then
-    ok "Image pullable: $IMG"
-  else
-    warn "Image may not be pullable (offline or private): $IMG"
-  fi
-done
+if ! command -v docker &>/dev/null; then
+  warn "docker not found — skipping image checks"
+else
+  for IMG in "${IMAGES[@]}"; do
+    if timeout 10s docker manifest inspect "$IMG" &>/dev/null 2>&1; then
+      ok "Image exists in registry: $IMG"
+    else
+      warn "Image not reachable (private, missing, or no internet): $IMG"
+    fi
+  done
+fi
 
 echo ""
 echo "========================================"
