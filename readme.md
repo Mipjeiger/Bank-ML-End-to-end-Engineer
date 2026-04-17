@@ -61,24 +61,38 @@
     ![alt text](Database/images/FB4286F8-0CE9-4C06-A4CC-A8C82B35F8D7.png)
     ![alt text](Database/images/30271C53-789C-4001-B190-F191FEE4296E.png)
 
-- LLM -> Large Language Models for Banking solution for simplify complex problem
-- LLM thoughts -> as LLMs disclaimer isn't defending this choice on the claim LLMs are accurate models from human cognition. In banking sector environment depend on case LLM can provide a useful structural priority to answer the banking problems through key of comparative statistics LLMs model embed.
-    - Banking LLM AI insights (Credit: https://www.getdynamiq.ai/post/generative-ai-and-llms-in-banking-examples-use-cases-limitations-and-solutions)
-    ![alt text](Database/images/4BF5C5CD-D301-478C-81FB-DBF6446AF146.png)
-    - Banking LLM User Interface (UI) for banking solution in Report Insights
-    ![alt text](Database/images/FA8FF2CE-1181-4D30-88F9-56FA62DC0BC3.png)
-    - Banking LLM UI for question as problem decision making helper
-    ![alt text](Database/images/DE6EC6A9-A9BF-4589-9FC6-E272EADAE0D6.png)
-    - Banking LLM in answering question to get insights
-    ![alt text](Database/images/9ABD266C-6350-4783-88C7-636C568D2F84.png)
-    - Banking LLM in answering question with simple characters
-    ![alt text](Database/images/103980E7-3631-4749-AAFC-016380C514AE.png)
-    - Banking LLM in Summary report explanation
-    ![alt text](Database/images/A4D2E73E-B032-46E4-B659-A57FCCE3D2D0.png)
-    - Banking LLM in gradio as User Interface (UI) inference to answer the questions
-    ![alt text](Database/images/8E018A7C-9306-4E35-8AF2-B7240828BFFA.png)
-    - Banking LLM insights for answering about factors of fraud from PDFs sources
-    ![alt text](Database/images/30957B22-8DA3-4423-AC91-CA6FB117F97B.png)
+- LLM -> LLM Deployments
+    - LLM  -> Large Language Models for Banking solution for simplify complex problem, as LLMs disclaimer isn't defending this choice on the claim LLMs are accurate models from human cognition. In banking sector environment depend on case LLM can provide a useful structural priority to answer the banking problems through key of comparative statistics LLMs model embed.
+        - Banking LLM AI insights (Credit: https://www.getdynamiq.ai/post/generative-ai-and-llms-in-banking-examples-use-cases-limitations-and-solutions)
+        ![alt text](Database/images/4BF5C5CD-D301-478C-81FB-DBF6446AF146.png)
+        - Banking LLM User Interface (UI) for banking solution in Report Insights
+        ![alt text](Database/images/FA8FF2CE-1181-4D30-88F9-56FA62DC0BC3.png)
+        - Banking LLM UI for question as problem decision making helper
+        ![alt text](Database/images/DE6EC6A9-A9BF-4589-9FC6-E272EADAE0D6.png)
+        - Banking LLM in answering question to get insights
+        ![alt text](Database/images/9ABD266C-6350-4783-88C7-636C568D2F84.png)
+        - Banking LLM in answering question with simple characters
+        ![alt text](Database/images/103980E7-3631-4749-AAFC-016380C514AE.png)
+        - Banking LLM in Summary report explanation
+        ![alt text](Database/images/A4D2E73E-B032-46E4-B659-A57FCCE3D2D0.png)
+        - Banking LLM in gradio as User Interface (UI) inference to answer the questions
+        ![alt text](Database/images/8E018A7C-9306-4E35-8AF2-B7240828BFFA.png)
+        - Banking LLM insights for answering about factors of fraud from PDFs sources
+        ![alt text](Database/images/30957B22-8DA3-4423-AC91-CA6FB117F97B.png)
+        
+    - Evidently AI for evaluation data drifting -> - Deploy on EvidentlyAI Cloud
+        - Dataset summary of LLMs Evaluation
+        ![alt text](Database/images/F644BE69-A0C4-4106-9EA6-4A18925138BC.png) 
+        - Answer length and word count of LLMs evaluation
+        ![alt text](Database/images/2B87ADD8-E294-40AF-B35B-1A8D00022A7C.png)
+        - Contains number & Uncertain sentence to prevent the hallucinates text
+        ![alt text](Database/images/08172A16-B2BD-46E9-8DD0-9198E7254B89.png)
+        - Contains percentage & fraud mentions on LLMs sentences
+        ![alt text](Database/images/95B0D563-60AE-42A9-9007-8D86B4C3ACDF.png)
+        - Mentions churn & numeric density based on data-driven (statistically assumption)
+        ![alt text](Database/images/872478B3-1515-47CE-8F38-00F558FB119F.png)
+        - Sentiment for answer & text length on sentences traffic
+        ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
 - Grafana & Prometheus for models monitoring
 - Prometheus
@@ -107,20 +121,6 @@
         ![alt text](Database/images/F392AA28-6602-46D5-8805-5D57219D68A2.png)
         - Models metrics 3rd pic
         ![alt text](Database/images/054EDFC7-CFAD-43E7-B6B8-A01ED6638C1C.png)
-
-- Evidently AI for evaluation data drifting -> - Deploy on EvidentlyAI Cloud
-    - Dataset summary of LLMs Evaluation
-    ![alt text](Database/images/F644BE69-A0C4-4106-9EA6-4A18925138BC.png) 
-    - Answer length and word count of LLMs evaluation
-    ![alt text](Database/images/2B87ADD8-E294-40AF-B35B-1A8D00022A7C.png)
-    - Contains number & Uncertain sentence to prevent the hallucinates text
-    ![alt text](Database/images/08172A16-B2BD-46E9-8DD0-9198E7254B89.png)
-    - Contains percentage & fraud mentions on LLMs sentences
-    ![alt text](Database/images/95B0D563-60AE-42A9-9007-8D86B4C3ACDF.png)
-    - Mentions churn & numeric density based on data-driven (statistically assumption)
-    ![alt text](Database/images/872478B3-1515-47CE-8F38-00F558FB119F.png)
-    - Sentiment for answer & text length on sentences traffic
-    ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
 - PostgreSQL for data analysis integration with bank system
     - SQL code cheatseet for data analyzing
