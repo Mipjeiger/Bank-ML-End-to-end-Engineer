@@ -95,7 +95,8 @@
         ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
     - Huggingface LLMs deployment using docker containerazitation
-    
+        - Banking-Project LLMs deployment on huggingface based the task (Fraud, Marketing, Operational)
+        
 
 - Grafana & Prometheus for models monitoring
 - Prometheus
