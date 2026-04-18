@@ -94,6 +94,9 @@
         - Sentiment for answer & text length on sentences traffic
         ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
+    - Huggingface LLMs deployment using docker containerazitation
+    
+
 - Grafana & Prometheus for models monitoring
 - Prometheus
     - Hierarcy models request total based on request calls on API's integrations by instances in host.docker.internal with job ml_models
