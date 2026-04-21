@@ -101,10 +101,15 @@
         ![alt text](Database/images/5378D8C6-FC45-418F-9B50-898802EF0978.png)
         - Available tasks API are ready for LLMs
         ![alt text](Database/images/51B8B4D0-ABCC-460B-9B25-CBDE7A21A724.png)
-        
+        - Machine learning model prediction with LLMs generating asnwer by 'fraud' task
+        ![alt text](Database/images/03C76025-E549-48D0-B0D0-D2E4FC34B894.png)
+        - Machine learning model prediction with LLMs generating asnwer by 'marketing' task
+        ![alt text](Database/images/647BDF0E-E2F8-486B-996F-E4CF1B2DF0DF.png)
+        - Machine learning model prediction with LLMs generating asnwer by 'operational' task
+        ![alt text](Database/images/A64D7EB0-38DE-4FF4-8225-B16C7DE4DF60.png)
         - Banking-Project LLMs deployment on huggingface based the task (Fraud, Marketing, Operational)
-
-        
+        - e.g. models by "fraud" task
+        ![alt text](Database/images/0A454A6E-83DD-4EA0-B6C6-519CCD4E8327.png)
 
 - Grafana & Prometheus for models monitoring
 - Prometheus
@@ -179,8 +184,6 @@
         ![alt text](Database/images/2EF0697B-9EA1-41EC-82DB-1DD12288F418.png)
         - 5. Banking-project (Fraud, Marketing, and Operational) models deployment in kubernetes dashboard UI service
         ![alt text](Database/images/45EC818F-5DCF-4080-9450-2CA2E37A4E6F.png)
-
-    - Deepchecks ML Models Testing -> testing models on deployment
 
 - Data and Pipeline Versioning Tools
     - Data Version Control (DVC) -> Data Version Control is an open-source and popular tool for machine learning projects. It works seamlessly with Git to provide you with code, data, model, metadata, and pipeline versioning. 
