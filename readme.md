@@ -46,7 +46,6 @@
     - User Interface (UI) for Operational Risk prediction
     ![alt text](Database/images/38B55107-C295-43E1-A6A4-0BCE299B5122.png)
 
-
 - MLFlow -> Tracking machine learning models & improve metrics result on based models
     - Experiment visualization: Using Parallel Coordinates Plots, we can instantly see the relationship between hyperparameters and performance. The "red" paths represent our champion models, predominantly XGBoost, which achieved the highest stability across all metrics.
     ![alt text](<Database/images/068A3389-DA3C-47EE-BD30-07D42E7B361E copy.png>)
@@ -94,7 +93,7 @@
         - Sentiment for answer & text length on sentences traffic
         ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
-    - Huggingface LLMs deployment using docker containerazitation
+    - Huggingface LLMs deployment by API integration
         - LLMs deployment in huggingface is success
         ![alt text](Database/images/054A0AEC-2017-494B-A861-181CBFCAA492.png)
         - LLMs deployment as banking-llm in API is running successfully
@@ -185,6 +184,16 @@
         - 5. Banking-project (Fraud, Marketing, and Operational) models deployment in kubernetes dashboard UI service
         ![alt text](Database/images/45EC818F-5DCF-4080-9450-2CA2E37A4E6F.png)
 
+- Deepchecks testing for ensuring the quality Data & Models
+    - 
+
+- Slack (for event in advantage & disadvantage actions)
+    - Slack getting advantage notifications
+
+    - Slack getting disadvantage notifications
+
+    - Slack automation compatible with CI/CD
+
 - Data and Pipeline Versioning Tools
     - Data Version Control (DVC) -> Data Version Control is an open-source and popular tool for machine learning projects. It works seamlessly with Git to provide you with code, data, model, metadata, and pipeline versioning. 
         - 
@@ -193,13 +202,6 @@
     - Prefect -> data stack for monitoring, coordinating, and orchestrating workflows between and across applications.
 
 - CI/CD pipelines for automation ML banking system
-
-- Slack (for event in advantage & disadvantage actions)
-    - Slack getting advantage notifications
-
-    - Slack getting disadvantage notifications
-
-    - Slack automation compatible with CI/CD
 
 - Deploy models on cloud (Optional: Try deploy on railway)
 
