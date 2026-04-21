@@ -95,7 +95,15 @@
         ![alt text](Database/images/074C6CB9-8E61-42B4-A717-650AAE983B37.png)
 
     - Huggingface LLMs deployment using docker containerazitation
+        - LLMs deployment in huggingface is success
+        ![alt text](Database/images/054A0AEC-2017-494B-A861-181CBFCAA492.png)
+        - LLMs deployment as banking-llm in API is running successfully
+        ![alt text](Database/images/5378D8C6-FC45-418F-9B50-898802EF0978.png)
+        - Available tasks API are ready for LLMs
+        ![alt text](Database/images/51B8B4D0-ABCC-460B-9B25-CBDE7A21A724.png)
+        
         - Banking-Project LLMs deployment on huggingface based the task (Fraud, Marketing, Operational)
+
         
 
 - Grafana & Prometheus for models monitoring
@@ -187,6 +195,8 @@
     - Slack getting advantage notifications
 
     - Slack getting disadvantage notifications
+
+    - Slack automation compatible with CI/CD
 
 - Deploy models on cloud (Optional: Try deploy on railway)
 
