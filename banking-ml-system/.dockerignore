@@ -1,0 +1,43 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+.env/
+
+# Git
+.git/
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Data (🔥 critical — prevent huge memory usage)
+data/raw/
+data/processed/
+data/reference/live_data.csv
+
+# Reports (Deepchecks HTML can get big)
+reports/
+
+# Notebooks
+*.ipynb
+
+# Temp files
+tmp/
+*.tmp
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Misc
+*.zip
+*.tar.gz

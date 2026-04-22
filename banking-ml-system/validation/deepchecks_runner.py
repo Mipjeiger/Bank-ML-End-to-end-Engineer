@@ -2,8 +2,10 @@ from deepchecks.tabular import Dataset
 from deepchecks.tabular.suites import full_suite
 import os
 from datetime import datetime
+from pathlib import Path
 
-REPORT_DIR = "reports/deepchecks"
+BASE_DIR = Path(__file__).parent.parent
+REPORT_DIR = BASE_DIR / "reports" / "deepchecks"
 
 # Create function for running deepchecks suite
 def run_full_validation(train_df, test_df, model, label="target"):
@@ -11,7 +13,7 @@ def run_full_validation(train_df, test_df, model, label="target"):
     test_ds = Dataset(test_df, label=label)
 
     suite = full_suite()
-    
+
     result = suite.run(
         train_dataset=train_ds,
         test_dataset=test_ds,
@@ -21,10 +23,13 @@ def run_full_validation(train_df, test_df, model, label="target"):
     # Save the report
     os.makedirs(REPORT_DIR, exist_ok=True)
 
-    file_path = os.path.join(
-        REPORT_DIR,
-        f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
-    )
-    result.save_as_html(file_path)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    return file_path
+    html_path = f"{REPORT_DIR}/report_{timestamp}.html"
+    json_path = f"{REPORT_DIR}/report_{timestamp}.json"
+
+    # Save the reports
+    result.save_as_html(html_path)
+    result.save_as_json(json_path)
+
+    return html_path, json_path
