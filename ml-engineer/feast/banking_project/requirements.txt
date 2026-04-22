@@ -1,0 +1,7 @@
+feast
+pandas
+scikit-learn
+fastapi
+uvicorn
+joblib
+pyarrow

@@ -184,6 +184,11 @@
         - 5. Banking-project (Fraud, Marketing, and Operational) models deployment in kubernetes dashboard UI service
         ![alt text](Database/images/45EC818F-5DCF-4080-9450-2CA2E37A4E6F.png)
 
+- Feast -> Feature Store in this project is involving between Engineer & Data scientist gonna be productionize real time models and build a feature platform
+- Feast goals in this project is ship features for Machine Learning models, model development, provides a centralized catalog for storing feature, Scale AI applications by enabling seamless integration of richer data and fine-tuning.
+    - 
+
+
 - Deepchecks testing for ensuring the quality Data & Models
     - 
 
