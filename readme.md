@@ -194,7 +194,7 @@
     ![alt text](Database/images/5996E017-ECF2-48BB-94EE-B1C2A98B196B.png)
     - Feature Store UI dashboard
     ![alt text](Database/images/0BB4260A-45A6-44F9-878D-2BF43B1DF473.png)
-- Deepchecks testing for ensuring the quality Data & Models
+- Deepchecks as UI for testing, monitoring and ensuring the quality Data & Models
     - 
 
 - Slack (for event in advantage & disadvantage actions)

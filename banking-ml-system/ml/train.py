@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+import json
 from pathlib import Path
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -10,11 +11,12 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from imblearn.over_sampling import SMOTE
 from validation.deepchecks_runner import run_full_validation
-from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
+from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score, confusion_matrix, classification_report
+from ml.preprocess import preprocess
 
 # Configuration
 BASE_DIR = Path(__file__).parent.parent
-DATA_DIR = BASE_DIR / "data" / "raw" / "eda_banking.parquet"
+DATA_DIR = BASE_DIR / "data" / "processed" / "eda_banking.parquet"
 MODELS_DIR = BASE_DIR / "models"
 REPORTS_DIR = BASE_DIR / "validation" / "reports"
 MODELS_DIR.mkdir(exist_ok=True)
@@ -37,10 +39,8 @@ def train():
     # Load dataset
     df = pd.read_parquet(DATA_DIR)
 
-    # Encode categorical variables
-    for col in df.select_dtypes(include=["object"]).columns:
-        le = LabelEncoder()
-        df[col] = le.fit_transform(df[col])
+    # Retrieve preprocessing from function has been created in ml/preprocess.py
+    df = preprocess(df)
 
     # Train for each target
     for task, target in TARGETS.items():
@@ -110,10 +110,14 @@ def train():
             score_accuracy = accuracy_score(y_test, best_model.predict(X_test_scaled))
             score_precision = precision_score(y_test, best_model.predict(X_test_scaled), average="weighted")
             score_recall = recall_score(y_test, best_model.predict(X_test_scaled), average="weighted")
+            cm = confusion_matrix(y_test, best_model.predict(X_test_scaled))
+            class_report = classification_report(y_test, best_model.predict(X_test_scaled))
             print(f"Best F1 Score for {name}: {score_f1:.4f}")
             print(f"Best Accuracy for {name}: {score_accuracy:.4f}")
             print(f"Best Precision for {name}: {score_precision:.4f}")
             print(f"Best Recall for {name}: {score_recall:.4f}")
+            print(f"Confusion Matrix for {name}:\n{cm}")
+            print(f"Classification Report for {name}:\n{class_report}")
 
             # Prepare data for deepchecks (unscaled, original features names)
             train_df = pd.DataFrame(X_train_resampled, columns=X.columns)
@@ -133,6 +137,21 @@ def train():
             joblib.dump(best_model, model_path)
             print(f"✅ Model saved to: {model_path}\n")
 
+
+            # Save metadata as JSON
+            metadata = {
+                "model_name": name,
+                "task": task,
+                "f1_score": score_f1,
+                "accuracy": score_accuracy,
+                "precision": score_precision,
+                "recall": score_recall,
+                "report_path": report_path
+            }
+            metadata_path = MODELS_DIR / f"{name}_{task}_metadata.json"
+            with open(metadata_path, "w") as f:
+                json.dump(metadata, f, indent=4)
+                print(f"✅ Metadata saved to: {metadata_path}\n")
 # Usage
 if __name__ == "__main__":
     train()

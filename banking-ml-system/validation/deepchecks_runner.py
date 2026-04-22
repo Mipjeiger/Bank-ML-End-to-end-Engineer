@@ -11,6 +11,7 @@ def run_full_validation(train_df, test_df, model, label="target"):
     test_ds = Dataset(test_df, label=label)
 
     suite = full_suite()
+    
     result = suite.run(
         train_dataset=train_ds,
         test_dataset=test_ds,
