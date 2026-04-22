@@ -1,6 +1,7 @@
 import pandas as pd
 import joblib
 import sys
+import pickle
 import json
 from pathlib import Path
 from sklearn.ensemble import RandomForestClassifier
@@ -53,6 +54,12 @@ def train():
         # Define X and y
         X = df.drop(columns=[target])
         y = df[target]
+
+        # Remove datetime column from X
+        datetime_cols = X.select_dtypes(include=["datetime64"]).columns.tolist()
+        if datetime_cols:
+            print(f"Removing datetime columns: {datetime_cols}")
+            X = X.drop(columns=datetime_cols)
 
         # Split the data
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
@@ -137,9 +144,10 @@ def train():
             print(f"📊 Report saved to: {report_path}")
 
             # Save the model
-            filename = f"{name}_{task}.joblib"
+            filename = f"{name}_{task}.pkl"
             model_path = MODELS_DIR / filename
-            joblib.dump(best_model, model_path)
+            with open(model_path, "wb") as f:
+                pickle.dump(best_model, f)
             print(f"✅ Model saved to: {model_path}\n")
 
 

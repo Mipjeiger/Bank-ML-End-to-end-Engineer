@@ -8,3 +8,7 @@ class CustomerData(BaseModel):
     SatisfactionScore: int
     Complain: int
     IsActiveMember: int
+
+class PredictionRequest(BaseModel):
+    task: str
+    data: dict

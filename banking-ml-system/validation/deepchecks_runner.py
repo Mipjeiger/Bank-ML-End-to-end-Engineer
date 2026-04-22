@@ -26,10 +26,8 @@ def run_full_validation(train_df, test_df, model, label="target"):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     html_path = f"{REPORT_DIR}/report_{timestamp}.html"
-    json_path = f"{REPORT_DIR}/report_{timestamp}.json"
 
     # Save the reports
     result.save_as_html(html_path)
-    result.save_as_json(json_path)
 
-    return html_path, json_path
+    return html_path

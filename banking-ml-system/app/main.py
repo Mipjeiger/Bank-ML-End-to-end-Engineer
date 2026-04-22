@@ -1,6 +1,7 @@
+import pandas as pd
 from datetime import datetime
-from fastapi import FastAPI
-from app.schemas import CustomerData
+from fastapi import FastAPI, HTTPException
+from app.schemas import CustomerData, PredictionRequest
 from app.inference import ModelInference
 from monitoring.drift import check_drift
 from monitoring.data_logger import log_data
@@ -24,21 +25,30 @@ def health_check():
 
 # Endpoint for model inference
 @app.post("/predict")
-def prediction(data: CustomerData):
-    data_dict = data.dict() # Define data dict
-    log_data(data_dict) # Log incoming data for monitoring
+def prediction(request: PredictionRequest):
+    try:
+        # Insantiate inference class
+        inference = ModelInference(task=request.task, auto_select_best=True)
 
-    # Drift flag
-    drift_flag = check_drift(data_dict)
+        # Convert dict to DataFrame
+        data_df = pd.DataFrame([request.data])
 
-    # Check for drift
-    if check_drift(data_dict):
-        return {"warning": "Data drift detected. Model performance may be affected."}
+        # Make prediction
+        result = inference.predict(data_df)
+
+        return result
     
-    # Prediction to model inference
-    prediction = ModelInference.predict(data_dict)
-
-    return {
-        "prediction": prediction,
-        "drift_flag": drift_flag
-    }
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/predict-ensemble")
+def predict_ensemble(request: PredictionRequest):
+    try:
+        inference = ModelInference(task=request.task, auto_select_best=False)
+        data_df = pd.DataFrame([request.data])
+        result = inference.predict_ensemble(data_df)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
