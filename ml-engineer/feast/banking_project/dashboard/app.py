@@ -5,7 +5,7 @@ store = FeatureStore(repo_path="../feature_repo")
 st.title("🏦 Banking Feature Store Dashboard")
 
 # List feature views
-st.header("Feature Views")
+st.header("Feature Store Views")
 feature_views = store.list_feature_views()
 
 for fv in feature_views:
@@ -21,7 +21,8 @@ if st.button("Get Features"):
     response = store.get_online_features(
         features=[
             "customer_profile_features:CreditScore",
-            "risk_features:OperationalRiskScore",  
+            "risk_features:OperationalRiskScore",
+            "marketing_features:Tenure"
         ],
         entity_rows=[{"customer_id": customer_id}]
     ).to_dict()

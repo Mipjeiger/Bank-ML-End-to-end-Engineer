@@ -190,7 +190,10 @@
     ![alt text](Database/images/F5A0CD5D-C514-4F70-BC0D-B5ED8D2ADF21.png)
     - Ingest features on Feature Store
     ![alt text](Database/images/3F114B88-B81A-44C1-924B-477E8BCEDA9C.png)
-
+    - Feature Store API Integration
+    ![alt text](Database/images/5996E017-ECF2-48BB-94EE-B1C2A98B196B.png)
+    - Feature Store UI dashboard
+    ![alt text](Database/images/0BB4260A-45A6-44F9-878D-2BF43B1DF473.png)
 - Deepchecks testing for ensuring the quality Data & Models
     - 
 
