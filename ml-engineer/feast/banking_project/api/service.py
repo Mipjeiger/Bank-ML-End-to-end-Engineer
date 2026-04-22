@@ -11,7 +11,7 @@ operational_model = joblib.load("../models/operational_model.pkl")
 
 # Create function for fraud prediction
 def predict_fraud(customer_id: int):
-    feature_vector = store.get_online_features(
+    response = store.get_online_features(
         features=[
             "customer_profile_features:CreditScore",
             "customer_profile_features:Age",
@@ -23,7 +23,12 @@ def predict_fraud(customer_id: int):
         entity_rows=[{"customer_id": customer_id}],
     ).to_dict()
 
-    values = list(feature_vector.values())
+    FEATURE_ORDER = [
+        "CreditScore", "Age", "Balance",
+        "RiskScore", "ComplainFlag", "LowSatisfaction"
+    ]
+
+    values = [response[f][0] for f in FEATURE_ORDER]
     prediction = fraud_model.predict([values])
 
     return int(prediction[0])
@@ -42,7 +47,12 @@ def predict_marketing(customer_id: int):
         entity_rows=[{"customer_id": customer_id}],
     ).to_dict()
 
-    values = list(feature_vector.values())
+    FEATURE_ORDER = [
+        "CreditScore", "Balance", "NumOfProducts",
+        "IsActiveMember", "Tenure", "HighValueCustomer"
+    ]
+
+    values = [feature_vector[f][0] for f in FEATURE_ORDER]
     prediction = marketing_model.predict([values])
 
     return int(prediction[0])
@@ -59,7 +69,12 @@ def predict_operational(customer_id: int):
         entity_rows=[{"customer_id": customer_id}],
     ).to_dict()
 
-    values = list(feature_vector.values())
+    FEATURE_ORDER = [
+        "Satisfaction Score", "AgeRisk",
+        "OperationalRiskScore", "LowCreditRisk"
+    ]
+
+    values = [feature_vector[f][0] for f in FEATURE_ORDER]
     prediction = operational_model.predict([values])
 
     return int(prediction[0])

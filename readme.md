@@ -186,8 +186,10 @@
 
 - Feast -> Feature Store in this project is involving between Engineer & Data scientist gonna be productionize real time models and build a feature platform
 - Feast goals in this project is ship features for Machine Learning models, model development, provides a centralized catalog for storing feature, Scale AI applications by enabling seamless integration of richer data and fine-tuning.
-    - 
-
+    - Retrieve dataset in pipeline engineering process to Feature Store
+    ![alt text](Database/images/F5A0CD5D-C514-4F70-BC0D-B5ED8D2ADF21.png)
+    - Ingest features on Feature Store
+    ![alt text](Database/images/3F114B88-B81A-44C1-924B-477E8BCEDA9C.png)
 
 - Deepchecks testing for ensuring the quality Data & Models
     - 
