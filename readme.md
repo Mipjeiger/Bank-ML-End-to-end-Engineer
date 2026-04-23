@@ -431,3 +431,16 @@ Precision: 0.9975
 Recall: 0.9926
 F1 Score: 0.9951
 Accuracy: 0.9980
+
+---
+
+End-to-End Machine Learning pipeline (source: https://medium.com/@ashmalanis08/deepchecks-enabling-automated-testing-of-your-ml-models-e4a2f3a9c5d3)
+write one sentences for each instead of two
+machine learning pipeline steps ingestion preprocessing training evaluation deployment production
+ANSWER | PHIND MODEL
+1.	Ingestion: In the ingestion step, data is collected from various sources, such as databases or APIs, and prepared for use in the machine learning pipeline. This process may involve cleaning, organizing, and transforming the data to ensure it is in a suitable format for subsequent steps.
+2.	Preprocessing: During preprocessing, the collected data is transformed and prepared for training the machine learning model. This step includes tasks such as data cleaning, feature extraction, feature engineering, data normalization, and handling missing values to ensure the data is in a suitable format and representation for the training and evaluation steps.
+3.	Training: In the training step, the machine learning model is trained on the preprocessed data. The model learns from the input data and adjusts its internal parameters to make predictions or classifications based on the provided training examples. The training process involves selecting an appropriate algorithm, defining the model architecture, and optimizing the model’s performance using techniques such as gradient descent or backpropagation.
+4.	Evaluation: The evaluation step assesses the performance of the trained machine learning model using separate datasets, typically referred to as validation or test sets. Evaluation metrics, such as accuracy, precision, recall, F1 score, and area under the curve (AUC), help determine if the model meets the desired performance criteria or if further adjustments are needed.
+5.	Deployment: Once the model has been evaluated and deemed satisfactory, it is deployed to a production environment where it can make predictions or classifications on new, unseen data. Deployment involves integrating the model into an application or system that can utilize its predictions in real-time, such as creating APIs, web services, or other interfaces to interact with the model and feed it with new data for inference.
+6.	Production: In the production phase, the deployed model is actively used to make predictions or classifications on a continuous basis. Monitoring and maintaining the model’s performance in a production environment is essential to ensure its accuracy and reliability over time. This may involve monitoring data drift, retraining the model periodically, and updating the model as new data becomes available or business requirements change.
