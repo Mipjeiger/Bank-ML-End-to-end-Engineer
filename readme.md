@@ -194,8 +194,12 @@
     ![alt text](Database/images/5996E017-ECF2-48BB-94EE-B1C2A98B196B.png)
     - Feature Store UI dashboard
     ![alt text](Database/images/0BB4260A-45A6-44F9-878D-2BF43B1DF473.png)
-- Deepchecks as UI for testing, monitoring and ensuring the quality Data & Models
-    - 
+- Deepchecks as for testing, monitoring and ensuring the quality Data & Models
+    - Training each ML Models with full suite to ennsure models are deployed
+    ![alt text](Database/images/55DD156F-C960-4A0D-95A7-35A198AA798B_1_105_c.jpeg)
+    ![alt text](Database/images/519B9E7D-CDEF-4AE6-B372-A9E4878413E2_1_105_c.jpeg)
+    ![alt text](Database/images/B36BBC1F-33E2-4ED6-B5A6-0DB745EAF785_1_105_c.jpeg)
+    ![alt text](Database/images/FA76C2C2-5CAD-47C9-986C-9C629DE91678_1_105_c.jpeg)
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications
