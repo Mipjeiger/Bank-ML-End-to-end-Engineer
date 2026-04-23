@@ -23,6 +23,10 @@ def health_check():
     return {"status": "healthy",
             "message": f"API is up and running. Current time run: {datetime.now().isoformat()}"}
 
+@app.get("/get-available-task")
+def get_available_tasks():
+    return 
+
 # Endpoint for model inference
 @app.post("/predict")
 def prediction(request: PredictionRequest):
