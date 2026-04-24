@@ -1,13 +1,28 @@
 from pydantic import BaseModel
 
 class CustomerData(BaseModel):
-    Balance: float
-    Tenure: int
-    customer_id: object
     CreditScore: int
+    Geography: str
+    Gender: str
+    Age: int
+    Tenure: int
+    Balance: float
+    NumOfProducts: int
+    HasCrCard: bool
+    IsActiveMember: bool
+    EstimatedSalary: float
+    Exited: bool
+    Complain: bool
     SatisfactionScore: int
-    Complain: int
-    IsActiveMember: int
+    CardType: str
+    PointEarned: int
+    RiskScore: int
+    BalancePerProduct: float
+    AgeRisk: bool
+    HighValueCustomer: bool
+    LowCreditRisk: bool
+    ComplainFlag: bool
+    LowSatisfaction: bool
 
 class PredictionRequest(BaseModel):
     task: str
