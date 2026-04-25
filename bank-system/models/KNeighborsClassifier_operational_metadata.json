@@ -1,0 +1,9 @@
+{
+    "model_name": "KNeighborsClassifier",
+    "task": "operational",
+    "f1_score": 0.9702119893759359,
+    "accuracy": 0.97,
+    "precision": 0.9711056853788782,
+    "recall": 0.97,
+    "report_path": "/Users/miftahhadiyannoor/Documents/Bank-Project/banking-ml-system/reports/deepchecks/report_20260424_215751.html"
+}

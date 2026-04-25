@@ -1,0 +1,9 @@
+{
+    "model_name": "XGBClassifier",
+    "task": "marketing",
+    "f1_score": 0.9984993152334081,
+    "accuracy": 0.9985,
+    "precision": 0.998499399245162,
+    "recall": 0.9985,
+    "report_path": "/Users/miftahhadiyannoor/Documents/Bank-Project/banking-ml-system/reports/deepchecks/report_20260424_215041.html"
+}

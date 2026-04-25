@@ -9,3 +9,4 @@ ml-engineer/kubeflow/pipelines/banking_pipeline.yaml
 banking_pipeline.yaml
 ml-engineer/kubeflow/kubeflow-pipelines.tar.gz
 ml-engineer/kubeflow/pipelines-2.2.0
+bank-system/frontend/node_modules

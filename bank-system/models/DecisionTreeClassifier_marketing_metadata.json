@@ -1,0 +1,9 @@
+{
+    "model_name": "DecisionTreeClassifier",
+    "task": "marketing",
+    "f1_score": 0.9975011372764815,
+    "accuracy": 0.9975,
+    "precision": 0.9975030389461503,
+    "recall": 0.9975,
+    "report_path": "/Users/miftahhadiyannoor/Documents/Bank-Project/banking-ml-system/reports/deepchecks/report_20260424_215233.html"
+}
