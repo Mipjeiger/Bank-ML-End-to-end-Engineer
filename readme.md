@@ -200,6 +200,7 @@
     ![alt text](Database/images/519B9E7D-CDEF-4AE6-B372-A9E4878413E2_1_105_c.jpeg)
     ![alt text](Database/images/B36BBC1F-33E2-4ED6-B5A6-0DB745EAF785_1_105_c.jpeg)
     ![alt text](Database/images/FA76C2C2-5CAD-47C9-986C-9C629DE91678_1_105_c.jpeg)
+    - Streamlit as UI (User Interface) performs
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications

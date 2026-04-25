@@ -4,13 +4,11 @@ from sklearn.preprocessing import LabelEncoder
 def preprocess(df: pd.DataFrame):
     # Load dataset
     df = df.copy()
-
-    # fill missing
-    df = df.fillna(0)
+    df = df.drop(columns=["customer_id"], errors="ignore")  # Drop rows with missing customer_id
+    df = df.fillna(0) # Fill missing values with 0 value
 
     # Encode categorical variables
-    for col in df.select_dtypes(include=["object"]).columns:
-        le = LabelEncoder()
-        df[col] = le.fit_transform(df[col])
+    for col in df.select_dtypes(include=["object", "category"]).columns:
+        df[col] = df[col].astype("category").cat.codes
 
     return df

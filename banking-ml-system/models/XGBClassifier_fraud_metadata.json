@@ -1,0 +1,9 @@
+{
+    "model_name": "XGBClassifier",
+    "task": "fraud",
+    "f1_score": 0.9563503357438017,
+    "accuracy": 0.957,
+    "precision": 0.9557238589833217,
+    "recall": 0.957,
+    "report_path": "/Users/miftahhadiyannoor/Documents/Bank-Project/banking-ml-system/reports/deepchecks/report_20260424_214649.html"
+}

@@ -7,3 +7,4 @@ joblib
 deepchecks==0.19.1
 pydantic
 streamlit
+xgboost>=2.1.4

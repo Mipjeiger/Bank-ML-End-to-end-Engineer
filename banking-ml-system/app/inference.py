@@ -1,18 +1,17 @@
 import joblib
 import pandas as pd
-import random
 import json
-from sklearn.preprocessing import StandardScaler, LabelEncoder
 from pathlib import Path
+from ml.preprocess import preprocess
 
 # Configuration
 BASE_DIR = Path(__file__).parent.parent
 MODELS_DIR = BASE_DIR / "models"
 METADATA_FILE = MODELS_DIR / "training_metadata.json"
-FEATURES = ["CreditScore", "Geography", "Gender", "Age", "Tenure", "Balance", 
-            "NumOfProducts", "HasCrCard", "IsActiveMember", "EstimatedSalary", 
-            "Complain", "Satisfaction Score", "Card Type", "Point Earned", 
-            "RiskScore", "BalancePerProduct", "AgeRisk", "HighValueCustomer", 
+FEATURES = ["CreditScore", "Geography", "Gender", "Age", "Tenure", "Balance",
+            "NumOfProducts", "HasCrCard", "IsActiveMember", "EstimatedSalary",
+            "Complain", "SatisfactionScore", "CardType", "PointEarned",
+            "RiskScore", "BalancePerProduct", "AgeRisk", "HighValueCustomer",
             "LowCreditRisk", "ComplainFlag", "LowSatisfaction"]
 
 MODEL_NAMES = ["LogisticRegression", "RandomForestClassifier", "XGBClassifier", 
@@ -25,15 +24,27 @@ class ModelInference:
         """tasl: "fraud", "marketing", "operational
         auto_select_best: If True, uses highest F1 score model."""
         self.task = task
-        self.scaler = StandardScaler()
 
+        # Load training features
+        feature_path = MODELS_DIR / f"{task}_features.json"
+        if not feature_path.exists():
+            raise FileNotFoundError(f"Features file not found: {feature_path}")
+        with open(feature_path, "r") as f:
+            self.train_features = json.load(f)
+
+        # Load scaler features
+        scaler_path = MODELS_DIR / f"{task}_scaler.pkl"
+        if not scaler_path.exists():
+            raise FileNotFoundError(f"Scaler file not found: {scaler_path}")
+        self.scaler = joblib.load(scaler_path) # Define self to load scaler
+
+        # Load metadata and select best model
         if auto_select_best:
-            # Load metadata and select best model
             best_model = self._get_best_model()
-            print(f"Selected best model: {self.model_name} for task: {self.task}")
             self.model_name = best_model
+            print(f"Selected best model: {self.model_name} for task: {self.task}")
         else:
-            self.model_name = None
+            raise ValueError("Manual model selection not implemented yet.")
 
         # Load the selected model
         self.model_path = MODELS_DIR / f"{self.model_name}_{task}.pkl"
@@ -79,19 +90,19 @@ class ModelInference:
     
     def preprocess(self, data: pd.DataFrame) -> pd.DataFrame:
         """Preprocess input data"""
-        X = data[FEATURES].copy()
-
-        for col in CATEGORY_COLS:
-            if col in X.columns:
-                X[col] = LabelEncoder().fit_transform(X[col])
+        X = preprocess(data)
+        X = X.reindex(columns=self.train_features, fill_value=0) # Ensure feature order
 
         return X
     
     def predict(self, data: pd.DataFrame) -> dict:
         """Make prediction with best model"""
-        df = pd.DataFrame([data], columns=FEATURES)
+        df = data.copy()
+
+        customer_id = df.get("customer_id", None) # keep customer_id for logging but not used in prediction
         X = self.preprocess(df)
-        X_scaled = self.scaler.fit_transform(X)
+        X = X.reindex(columns=self.train_features, fill_value=0)
+        X_scaled = self.scaler.transform(X)
         
         # Predict probabilities
         prediction = self.model.predict(X_scaled)[0]

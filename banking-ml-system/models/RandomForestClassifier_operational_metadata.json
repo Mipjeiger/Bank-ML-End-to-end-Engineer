@@ -1,0 +1,9 @@
+{
+    "model_name": "RandomForestClassifier",
+    "task": "operational",
+    "f1_score": 0.9995001053134911,
+    "accuracy": 0.9995,
+    "precision": 0.9995010040160642,
+    "recall": 0.9995,
+    "report_path": "/Users/miftahhadiyannoor/Documents/Bank-Project/banking-ml-system/reports/deepchecks/report_20260424_215442.html"
+}

@@ -1,15 +1,35 @@
 services:
   api:
     build: .
+    container_name: banking-api
     ports:
       - "8000:8080"
     volumes:
+      - ./models:/app/models
       - ./reports:/app/reports
+      - ./data:/app/data
+    restart: always
   
+  deepchecks:
+    build:
+      context: .
+      dockerfile: Dockerfile.deepchecks
+    container_name: deepchecks-monitoring
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./reports:/app/reports
+    restart: always
+
   dashboard:
     build: .
+    container_name: banking-dashboard
     command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
     ports:
       - "8501:8501"
     volumes: 
       - ./reports:/app/reports
+      - ./models:/app/models
+    depends_on:
+      - api
+    restart: always

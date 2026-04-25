@@ -58,8 +58,14 @@ def train():
         # Remove datetime column from X
         datetime_cols = X.select_dtypes(include=["datetime64"]).columns.tolist()
         if datetime_cols:
-            print(f"Removing datetime columns: {datetime_cols}")
             X = X.drop(columns=datetime_cols)
+
+        # Save features list
+        features_path = MODELS_DIR / f"{task}_features.json"
+        if not features_path.exists():
+            with open(features_path, "w") as f:
+                json.dump(X.columns.tolist(), f)
+            print(f"✅ Features list saved to: {features_path}\n")
 
         # Split the data
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
@@ -71,6 +77,13 @@ def train():
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train_resampled)
         X_test_scaled = scaler.transform(X_test)
+
+        # Save scaler only once per training task
+        scaler_path = MODELS_DIR / f"{task}_scaler.pkl"
+        if not scaler_path.exists():
+            joblib.dump(scaler, scaler_path)
+            print(f"✅ Scaler saved to: {scaler_path}\n")
+        # ---------
 
         # Create param_grid for each model
         param_grid = {
@@ -149,7 +162,6 @@ def train():
             with open(model_path, "wb") as f:
                 pickle.dump(best_model, f)
             print(f"✅ Model saved to: {model_path}\n")
-
 
             # Save metadata as JSON
             metadata = {

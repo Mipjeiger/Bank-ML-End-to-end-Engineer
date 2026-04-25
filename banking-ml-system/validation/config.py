@@ -22,14 +22,11 @@ TARGETS = {
 }
 
 # Feature columns
-FEATURES = [
-    "CreditScore", "Geography", "Gender", "Age", "Tenure",
-    "Balance", "NumOfProducts", "HasCrCard", "IsActiveMember",
-    "EstimatedSalary", "Complain", "Satisfaction Score",
-    "Card Type", "Point Earned", "RiskScore", "BalancePerProduct",
-    "AgeRisk", "HighValueCustomer", "LowCreditRisk",
-    "ComplainFlag", "LowSatisfaction",
-]
+FEATURES = ["CreditScore", "Geography", "Gender", "Age", "Tenure", "Balance",
+            "NumOfProducts", "HasCrCard", "IsActiveMember", "EstimatedSalary",
+            "Complain", "SatisfactionScore", "CardType", "PointEarned",
+            "RiskScore", "BalancePerProduct", "AgeRisk", "HighValueCustomer",
+            "LowCreditRisk", "ComplainFlag", "LowSatisfaction"]
 
 CATEGORICAL_COLS = ["Geography", "Gender", "Card Type"]
 
