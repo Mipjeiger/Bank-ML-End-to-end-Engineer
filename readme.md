@@ -220,8 +220,15 @@
 
 - Deploy models on cloud (Optional: Try deploy on railway)
 
-
 - Deploy LLMs gradio on Huggingface
+
+## 📊 Bank system end-to-end Machine Learning Engineer
+
+- Frontend
+
+- Backend
+
+- MLOps integration workflows
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns

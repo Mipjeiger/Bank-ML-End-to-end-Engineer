@@ -96,7 +96,7 @@ def retrain_model_for_task(task_name: str, **context):
 
     # Save features
     features_path = MODELS_DIR / f"{task_name}_features.json"
-    with open(features_path, "w") as f:
+    with open(features_path, "w") as f: 
         json.dump({"feature_names": X.columns.tolist()}, f)
 
     # Train and evaluate each models
