@@ -229,6 +229,8 @@
 - Backend
 
 - MLOps integration workflows
+    - Docker containerazitation for backend & frontend
+    
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns
