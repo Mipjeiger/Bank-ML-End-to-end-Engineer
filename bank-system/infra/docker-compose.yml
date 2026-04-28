@@ -19,19 +19,6 @@ services:
             timeout: 5s
             retries: 3
 
-    # Frontend
-    frontend:
-        build: ../frontend
-        container_name: bank-frontend
-        ports:
-            - "3002:3000"
-        environment:
-            - REACT_APP_API_URL=http://backend:8000
-        depends_on:
-            - backend
-        networks:
-            - bank-network
-
     # PostgreSQL Database
     postgresql:
         image: postgres:15-alpine

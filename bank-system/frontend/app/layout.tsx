@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Banking System",
-  description: "Bank project dashboard",
+  title: "Banking ML Prediction System",
+  description: "Advanced Customer Risk Assessment",
 };
 
 export default function RootLayout({

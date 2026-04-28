@@ -225,11 +225,19 @@
 ## 📊 Bank system end-to-end Machine Learning Engineer
 
 - Frontend
+    - Bank system UI production
+    🏦 Banking ML Prediction System
+    ![alt text](Database/images/164E6C62-A71D-4BA9-BE66-62759B3EA2FF.png)
+    ![alt text](Database/images/D0696428-161B-41F1-8A36-1B9B2E868635.png)
+    Risk prediction with Machine learning models
+    ![alt text](Database/images/E06E5E33-310F-493A-8F5A-46D4D0C1994D.png)
+
 
 - Backend
 
 - MLOps integration workflows
     - Docker containerazitation for backend & frontend
+    ![alt text](Database/images/D2B2674B-16D0-4D60-8722-1C64930E276B.png)
     
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report

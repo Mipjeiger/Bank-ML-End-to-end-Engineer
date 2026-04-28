@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { apiClient } from "@/services/api";
+import { apiClient } from "../services/api";
 
 export default function PredictionForm() {
   const [model, setModel] = useState("LogisticRegression");
