@@ -252,6 +252,11 @@ export default function Page() {
                   checked={raw.Complain}
                   onChange={(e) => setField("Complain", e.target.checked)}
                 />
+                <CheckboxField
+                  label="High Value Customer"
+                  checked={raw.HighValueCustomer}
+                  onChange={(e) => setField("HighValueCustomer", e.target.checked)}
+                />
               </div>
             </div>
 
