@@ -5,7 +5,8 @@ from typing import Optional
 # Shared registry for Prometheus metrics
 REGISTRY = CollectorRegistry()
 
-REQUEST_COUNT = Counter("request_total", "request_count", "Total number of requests", registry=REGISTRY)
+REQUEST_COUNT = Counter("request_total", "Total number of requests", registry=REGISTRY)
+PREDICTION_COUNT = Counter("prediction_total", "Total number of predictions made", ["model", "status"], registry=REGISTRY)
 DATA_DRIFT_SCORE = Gauge("data_drift_score", "Data drift score based on statistical tests", registry=REGISTRY)
 
 """Prometheus metrics for monitoring the API."""

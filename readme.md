@@ -202,26 +202,6 @@
     ![alt text](Database/images/FA76C2C2-5CAD-47C9-986C-9C629DE91678_1_105_c.jpeg)
     - Streamlit as UI (User Interface) performs
 
-- Slack (for event in advantage & disadvantage actions)
-    - Slack getting advantage notifications
-
-    - Slack getting disadvantage notifications
-
-    - Slack automation compatible with CI/CD
-
-- Data and Pipeline Versioning Tools
-    - Data Version Control (DVC) -> Data Version Control is an open-source and popular tool for machine learning projects. It works seamlessly with Git to provide you with code, data, model, metadata, and pipeline versioning. 
-        - 
-
-- Orchestration and Workflow Pipelines MLOps Tools
-    - Prefect -> data stack for monitoring, coordinating, and orchestrating workflows between and across applications.
-
-- CI/CD pipelines for automation ML banking system
-
-- Deploy models on cloud (Optional: Try deploy on railway)
-
-- Deploy LLMs gradio on Huggingface
-
 ## 📊 Bank system end-to-end Machine Learning Engineer
 
 - Frontend
@@ -238,7 +218,26 @@
 - MLOps integration workflows
     - Docker containerazitation for backend & frontend
     ![alt text](Database/images/D2B2674B-16D0-4D60-8722-1C64930E276B.png)
-    
+
+- CI/CD pipelines for automation ML banking system
+
+- Slack (for event in advantage & disadvantage actions)
+    - Slack getting advantage notifications
+
+    - Slack getting disadvantage notifications
+
+    - Slack automation compatible with CI/CD
+
+- Data and Pipeline Versioning Tools
+    - Data Version Control (DVC) -> Data Version Control is an open-source and popular tool for machine learning projects. It works seamlessly with Git to provide you with code, data, model, metadata, and pipeline versioning. 
+        - 
+
+- Orchestration and Workflow Pipelines MLOps Tools
+    - Prefect -> data stack for monitoring, coordinating, and orchestrating workflows between and across applications.
+
+- Deploy models on cloud (Optional: Try deploy on railway)
+
+- Deploy LLMs gradio on Huggingface
 
 ## 🏦 LLM Reasoning Engine by retrieval PDFs document - Banking AI Insights Report
 **Dataset:** 10,000 rows, 25 columns

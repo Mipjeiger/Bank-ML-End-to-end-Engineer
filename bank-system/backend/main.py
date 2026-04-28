@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.api.routes import router
 from app.monitoring.prometheus import setup_metrics
+from config.config import MODEL_PATH
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,3 +39,8 @@ async def health():
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Banking System API!"}
+
+@app.get("/models-registry")
+async def list_models():
+    from app.services.model_registry import registry
+    return {"available_models": registry.list_models()}
