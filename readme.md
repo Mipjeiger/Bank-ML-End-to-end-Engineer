@@ -26,7 +26,7 @@
 - XGBoost Classifier - Confusion Matrix
     ![alt text](Database/images/confusion_matrix_XGBoost.png)
 
-## 🏦 API Production -> Models ingested to embed in Production with API Integration
+## 🏦 Bank API Production -> Integrating Engineering progress in data & sofware with goals merges to get enchanceable system contains MLOps too.
 - Machine learning models Information -> Churn and Fraud (Involving Market analysis, Operational risk, Fraud detection, Credit risk analysis)
     - Machine learning models information
     ![alt text](Database/images/18E46D30-9ED8-4F50-80EE-1877CFCA8B35.png)
@@ -211,15 +211,31 @@
     ![alt text](Database/images/D0696428-161B-41F1-8A36-1B9B2E868635.png)
     Risk prediction with Machine learning models
     ![alt text](Database/images/E06E5E33-310F-493A-8F5A-46D4D0C1994D.png)
-
-
+    
 - Backend
+    - API Integration on production - APi calls reliable system
+    ![alt text](Database/images/5EB2B8FB-E82D-4C54-B172-4A45FF01BB29.png)
+    - APi Backend integration containeraized by docker logs
+    ![alt text](Database/images/1E561327-E905-4C1B-A31D-B7E9AD92DCD4_1_201_a.jpeg)
 
 - MLOps integration workflows
     - Docker containerazitation for backend & frontend
     ![alt text](Database/images/D2B2674B-16D0-4D60-8722-1C64930E276B.png)
+    - Prometheus to get API metrics calls
+        - Prediction total models are success
+        ![alt text](Database/images/27DFD600-CFFE-42B4-941B-8720FBB53D8D.png)
+        ![alt text](Database/images/1C30EFCB-C9CA-4D1C-979E-72E69324C4BB.png)
+        ![alt text](Database/images/1C30EFCB-C9CA-4D1C-979E-72E69324C4BB.png)
+        - Scrape duration on API request per second
+        ![alt text](Database/images/97BF40B4-FA18-4405-B463-B11424EC7973.png)
+    
+    - Grafana monitoring metrics wrapped on request, prediction, & scrape
+    ![alt text](Database/images/9FC72736-1259-4D5A-B051-3E47361C09E0.png)
+    ![alt text](Database/images/1A66D5B7-AD03-4093-B641-8D4ADAD341D0.png)
 
 - CI/CD pipelines for automation ML banking system
+    - Auto prediction with best models
+    - Auto alerting on monitors toward to weak models
 
 - Slack (for event in advantage & disadvantage actions)
     - Slack getting advantage notifications

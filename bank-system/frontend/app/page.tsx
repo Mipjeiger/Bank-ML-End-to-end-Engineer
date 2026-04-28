@@ -20,6 +20,7 @@ type RawCustomer = {
   CardType: string;
   PointEarned: number;
   RiskScore: number;
+  HighValueCustomer: boolean;
 };
 
 type CustomerData = RawCustomer & {
@@ -61,6 +62,7 @@ const DEFAULT_RAW: RawCustomer = {
   CardType: "Silver",
   PointEarned: 0,
   RiskScore: 0,
+  HighValueCustomer: false
 };
 
 interface PredictionResult {

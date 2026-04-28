@@ -8,6 +8,10 @@ services:
         environment:
             - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
             - REDIS_URL=redis://${REDIS_HOST}:${REDIS_PORT}
+            - MODELS_DIR=/app/models
+            - DATA_PATH=/app/database/eda_banking.parquet
+        volumes:
+            - ../backend:/app
         depends_on:
             - postgresql
             - redis
