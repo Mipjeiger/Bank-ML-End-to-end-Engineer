@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class CustomerData(BaseModel):
     customer_id: str
@@ -18,13 +19,21 @@ class CustomerData(BaseModel):
     CardType: str
     PointEarned: int
     RiskScore: int
-    BalancePerProduct: float
-    AgeRisk: bool
-    HighValueCustomer: bool
-    LowCreditRisk: bool
-    ComplainFlag: bool
-    LowSatisfaction: bool
+    BalancePerProduct: Optional[float] = None
+    AgeRisk: Optional[bool] = None
+    HighValueCustomer: Optional[bool] = None
+    LowCreditRisk: Optional[bool] = None
+    ComplainFlag: Optional[bool] = None
+    LowSatisfaction: Optional[bool] = None
 
 class PredictionRequest(BaseModel):
     task: str
     data: dict
+
+class PredictionResponse(BaseModel):
+    model: str
+    customer_id: str
+    probability: float
+    prediction: int
+    risk: str
+    cached: bool = False

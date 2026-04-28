@@ -1,15 +1,13 @@
 import numpy as np
-from fastapi import FastAPI, HTTPException
-from app.schemas.customer import CustomerData
+from fastapi import APIRouter, HTTPException
+from app.schemas.customer import CustomerData, PredictionRequest
 from app.services.inference import predict
 from app.services.cache import get_cache, set_cache
 from app.services.feature_engineering import feature_engineering
 from app.monitoring.prometheus import REQUEST_COUNT
 
 # Create router for API
-router = FastAPI(title="Banking System API",
-                 description="API for bank system with model inference and caching, involving feature engineering and deployment monitoring.",
-                 version="1.0.0")
+router = APIRouter()
 
 @router.post("/predict/{model_name}")
 def predict_route(model_name: str, data: CustomerData):
@@ -39,3 +37,34 @@ def predict_route(model_name: str, data: CustomerData):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/batch-predict/{model_name}")
+def batch_predict_route(model_name: str, batch_data: list[CustomerData]):
+    """Batch prediction for multiple customers API"""
+    REQUEST_COUNT.inc()
+
+    results = []
+    for data in batch_data:
+        try:
+            payload = data.dict()
+            features = feature_engineering(payload)
+            prediction = predict(model_name, features)
+
+            result = {
+                "customer_id": data.customer_id,
+                "probability": float(prediction),
+                "prediction": int(np.round(prediction)),
+                "risk": "High Risk" if prediction > 0.7 else "Low Risk"
+            }
+            results.append(result)
+        except Exception as e:
+            results.append({
+                "customer_id": data.customer_id,
+                "error": str(e)
+            })
+    
+    return {"model": model_name, "results": results}
+
+@router.get("/health")
+def health_check():
+    return {"status": "ok"}
